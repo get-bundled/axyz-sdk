@@ -1,0 +1,68 @@
+{
+  "name": "bundled-packages",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/config-lerna-scopes": "^15.0.0",
+    "conventional-changelog-conventionalcommits": "^4.6.1",
+    "husky": "^7.0.4",
+    "lerna": "^4.0.0",
+    "turbo": "*"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "turbo": {
+    "pipeline": {
+      "build": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "dist/**"
+        ]
+      },
+      "lint": {
+        "outputs": []
+      },
+      "type-check": {
+        "outputs": []
+      },
+      "test": {
+        "outputs": []
+      },
+      "coverage": {
+        "outputs": [
+          "coverage/**"
+        ]
+      },
+      "precommit": {
+        "outputs": []
+      },
+      "prepublish": {
+        "outputs": []
+      },
+      "dev": {
+        "cache": false
+      }
+    }
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "turbo run dev --parallel --no-cache",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "check": "turbo run test lint type-check",
+    "build": "turbo run build",
+    "precommit": "turbo run precommit",
+    "prepublish": "turbo run prepublish",
+    "version-stable": "lerna version --create-release github",
+    "version-stable:ci": "lerna version --yes --create-release github",
+    "version-canary": "lerna version --preid canary --conventional-prerelease --create-release github",
+    "version-canary:ci": "lerna version --yes --preid canary --conventional-prerelease --create-release github",
+    "publish": "lerna publish from-package",
+    "publish:ci": "lerna publish from-package --yes"
+  }
+}
