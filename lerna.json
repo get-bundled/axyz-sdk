@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/lerna",
+  "changelogPreset": {
+    "name": "conventionalcommits",
+    "types": [
+      { "type": "chore", "section": "Chores", "hidden": false },
+      { "type": "docs", "section": "Documentation", "hidden": false },
+      { "type": "feat", "section": "Features" },
+      { "type": "fix", "section": "Bug Fixes" },
+      { "type": "perf", "section": "Performance", "hidden": false },
+      { "type": "refactor", "section": "Refactoring", "hidden": false },
+      { "type": "style", "section": "Styles", "hidden": false },
+      { "type": "test", "section": "Testing", "hidden": false }
+    ]
+  },
+  "packages": ["packages/*"],
+  "command": {
+    "publish": {
+      "allowBranch": ["main", "canary"],
+      "registry": "https://registry.npmjs.org/",
+      "verifyAccess": false
+    },
+    "version": {
+      "conventionalCommits": true,
+      "changelogPreset": "conventionalcommits",
+      "ignoreChanges": ["**/README.md", "**/CHANGELOG.md", "**/*.txt"],
+      "allowBranch": ["main", "canary"],
+      "message": "ci: publish"
+    }
+  },
+  "version": "independent"
+}

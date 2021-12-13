@@ -1,0 +1,78 @@
+{
+  "name": "@getbundled/js",
+  "version": "0.0.0",
+  "description": "The standard Javascript SDK library for Bundled",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "umd:main": "dist/umd/index.js",
+  "types": "dist/types/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "run-p build:*",
+    "build:cjs": "rimraf dist/cjs && tsc -p config/tsconfig.cjs.json",
+    "build:esm": "rimraf dist/esm && tsc -p config/tsconfig.esm.json",
+    "build:umd": "rimraf dist/umd && webpack --config config/webpack.config.js",
+    "build:types": "rimraf dist/types && tsc -p config/tsconfig.types.json",
+    "clean": "rimraf dist",
+    "package": "npm run build && npm pack",
+    "test": "jest --no-cache --runInBand --passWithNoTests",
+    "test:coverage": "jest --coverage --no-cache --runInBand"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "getbundled",
+    "bundled",
+    "sdk"
+  ],
+  "author": "getbundled.co",
+  "contributors": [
+    {
+      "name": "Jeremy Monson",
+      "email": "jeremy@getbundled.co",
+      "url": "https://github.com/monsonjeremy"
+    },
+    {
+      "name": "Michael Malchak",
+      "email": "michael@getbundled.co",
+      "url": "https://github.com/malchak"
+    }
+  ],
+  "homepage": "https://github.com/get-bundled/bundled#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/get-bundled/bundled.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/get-bundled/bundled/issues"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.4.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.3",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
