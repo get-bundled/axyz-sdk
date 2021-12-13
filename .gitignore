@@ -5,6 +5,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+.DS_Store
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -71,6 +72,7 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+.env.development
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -102,3 +104,36 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+#
+# !example_override.tf
+
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+# example: *tfplan*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+**/*.tfvars
+.turbo
+
+pnpm-global

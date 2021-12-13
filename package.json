@@ -1,0 +1,28 @@
+{
+  "name": "axyz-packages",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.1",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@commitlint/config-lerna-scopes": "^16.2.2",
+    "conventional-changelog-conventionalcommits": "^4.6.3",
+    "husky": "^7.0.4",
+    "lerna": "^4.0.0",
+    "turbo": "*"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "check": "turbo run test lint type-check --no-cache",
+    "build": "turbo run build",
+    "version-stable": "lerna version --conventional-graduate --create-release github",
+    "version-stable:ci": "lerna version --yes --conventional-graduate --create-release github",
+    "version-canary": "lerna version --preid canary --conventional-prerelease --create-release github",
+    "version-canary:ci": "lerna version --yes --preid canary --conventional-prerelease --create-release github",
+    "publish:local": "lerna publish from-package",
+    "publish:ci": "lerna publish from-package --yes"
+  },
+  "packageManager": "pnpm@6.31.0"
+}

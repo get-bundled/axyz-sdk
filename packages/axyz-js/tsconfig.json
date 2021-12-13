@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig.json",
+  "extends": "../../tsconfig.json",
+  "include": ["src"],
+  "exclude": ["node_modules", "lib"],
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "noEmit": false,
+    "outDir": "lib/esm",
+    "skipLibCheck": true
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "@axyzsdk/js",
+  "version": "0.0.0",
+  "description": "The standard Javascript SDK library for Axyz",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/types/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "run-p build:*",
+    "build:esm": "tsc --outDir lib/esm",
+    "build:cjs": "tsc --outDir lib/cjs --module commonjs",
+    "build:types": "tsc --outDir lib/types --emitDeclarationOnly",
+    "type-check": "tsc --pretty --noEmit",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "test": "jest --no-cache --runInBand --passWithNoTests",
+    "test:coverage": "jest --coverage --no-cache --runInBand"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "axyz",
+    "axyz wallet",
+    "sdk",
+    "web3"
+  ],
+  "author": "getbundled.co",
+  "contributors": [
+    {
+      "name": "Jeremy Monson",
+      "email": "jeremy@getbundled.co",
+      "url": "https://github.com/monsonjeremy"
+    },
+    {
+      "name": "Michael Malchak",
+      "email": "michael@getbundled.co",
+      "url": "https://github.com/malchak"
+    }
+  ],
+  "homepage": "https://github.com/get-bundled/axyz-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/get-bundled/axyz-sdk.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/get-bundled/axyz-sdk/issues"
+  },
+  "dependencies": {
+    "@solana/wallet-adapter-base": "^0.9.4",
+    "@solana/wallet-adapter-wallets": "^0.15.5",
+    "@solana/web3.js": "1.36.0",
+    "axios": "^0.26.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.17.2",
+    "@types/jest": "^27.4.1",
+    "@types/keccak": "^3.0.1",
+    "@types/readable-stream": "^2.3.13",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.5.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "ts-jest": "^27.1.3",
+    "typescript": "~4.5.5"
+  }
+}
