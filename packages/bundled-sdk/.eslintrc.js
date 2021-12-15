@@ -20,7 +20,7 @@ module.exports = {
       },
       files: ['**/*.ts', '**/*.tsx'],
       plugins: ['@typescript-eslint'],
-      extends: ['airbnb-typescript/base'],
+      extends: ['airbnb-typescript/base', 'prettier'],
       rules: {},
     },
   ],
