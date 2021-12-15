@@ -28,17 +28,7 @@ export const BundledSDK = (
     },
   });
 
-  const connect = async (username: string, password: string) => {
-    const response = await api.post<{ publicKey: string }>('/api/connect', undefined, {
-      auth: { username, password },
-    });
-
-    const { publicKey } = response.data;
-
-    return {
-      publicKey,
-    };
-  };
+  const connect = CreateConnect(api);
 
   return {
     apiKey,
