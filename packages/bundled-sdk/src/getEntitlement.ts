@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import config from './config';
 
 interface GetEntitlementResponse {
   entitled: true;
@@ -13,8 +14,15 @@ export interface GetEntitlementResult extends Partial<GetEntitlementResponse> {
 const CreateGetEntitlement = (api: AxiosInstance) => {
   const getEntitlement = async (): Promise<GetEntitlementResult> => {
     try {
+      if (!config.bundledUserId) {
+        return {
+          error: 'Bundled UserID is not set. Please ensure you have called "connect" first.',
+        };
+      }
+
       const response = await api.get<Omit<Required<GetEntitlementResponse>, 'error'>>(
-        '/api/connect'
+        '/api/connect',
+        { headers: { 'x-user-id': config.bundledUserId } }
       );
 
       return response.data;
