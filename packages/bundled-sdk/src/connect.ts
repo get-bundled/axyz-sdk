@@ -13,10 +13,10 @@ export interface ConnectResult {
 const CreateConnect = (api: AxiosInstance) => {
   const connect = async (username: string, password: string): Promise<ConnectResult> => {
     if (!username) {
-      throw new Error('Username is required');
+      return { error: 'Username is required' };
     }
     if (!password) {
-      throw new Error('Password is required');
+      return { error: 'Password is required' };
     }
 
     try {
