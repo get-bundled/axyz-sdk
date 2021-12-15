@@ -1,6 +1,7 @@
 import axios from 'axios';
 import CreateConnect from './connect';
 import config from './config';
+import CreateGetEntitlement, { GetEntitlementResult } from './getEntitlement';
 
 interface Options {
   environment: 'local' | 'dev' | 'prod';
@@ -29,13 +30,16 @@ export const BundledSDK = (
   });
 
   const connect = CreateConnect(api);
+  const getEntitlement = CreateGetEntitlement(api);
 
   return {
     apiKey,
     version: config.version,
     bundledUserId: config.bundledUserId,
     connect,
+    getEntitlement,
   };
 };
 
 export default BundledSDK;
+export type { GetEntitlementResult };
