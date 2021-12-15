@@ -1,5 +1,5 @@
 import axios from 'axios';
-import CreateConnect from './connect';
+import CreateConnect, { ConnectResult } from './connect';
 import config from './config';
 import CreateGetEntitlement, { GetEntitlementResult } from './getEntitlement';
 
@@ -42,4 +42,4 @@ export const BundledSDK = (
 };
 
 export default BundledSDK;
-export type { GetEntitlementResult };
+export type { ConnectResult, GetEntitlementResult, Options as BundledSDKOptions };
