@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { version } from '../package.json';
+import CreateConnect from './connect';
+import config from './config';
 
 interface Options {
   environment: 'local' | 'dev' | 'prod';
+  bundledUserId?: string;
 }
 
 enum BaseURL {
@@ -11,9 +13,19 @@ enum BaseURL {
   prod = 'https://api.bundled.co',
 }
 
-export const BundledSDK = (apiKey: string, { environment }: Options = { environment: 'local' }) => {
+export const BundledSDK = (
+  apiKey: string,
+  { environment, bundledUserId }: Options = { environment: 'local' }
+) => {
+  if (bundledUserId) {
+    config.bundledUserId = bundledUserId;
+  }
+
   const api = axios.create({
     baseURL: BaseURL[environment],
+    headers: {
+      'x-api-key': apiKey,
+    },
   });
 
   const connect = async (username: string, password: string) => {
@@ -30,8 +42,9 @@ export const BundledSDK = (apiKey: string, { environment }: Options = { environm
 
   return {
     apiKey,
+    version: config.version,
+    bundledUserId: config.bundledUserId,
     connect,
-    version,
   };
 };
 
