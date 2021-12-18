@@ -10,8 +10,8 @@ interface Options {
 
 enum BaseURL {
   local = 'http://localhost:3333',
-  dev = 'https://api-dev.bundled.co',
-  prod = 'https://api.bundled.co',
+  dev = 'https://api-dev.getbundled.co',
+  prod = 'https://api.getbundled.co',
 }
 
 export const BundledSDK = (
