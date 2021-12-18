@@ -10,7 +10,7 @@ interface Options {
 
 enum BaseURL {
   local = 'http://localhost:3333',
-  dev = 'https://dev.api.bundled.co',
+  dev = 'https://api-dev.bundled.co',
   prod = 'https://api.bundled.co',
 }
 
