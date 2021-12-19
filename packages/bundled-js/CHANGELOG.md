@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.1.3](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.1.2...@getbundled/js@0.1.3) (2021-12-19)
+
+
+### Bug Fixes
+
+* incorrect entitlement url ([bb7d942](https://github.com/get-bundled/bundled/commit/bb7d9420d71199ed7b208395af5af5df929b0f47))
+
+
+
 ### [0.1.2](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.1.1...@getbundled/js@0.1.2) (2021-12-18)
 
 
