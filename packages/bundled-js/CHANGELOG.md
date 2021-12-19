@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.0](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.1.4...@getbundled/js@0.2.0) (2021-12-19)
+
+
+### Features
+
+* add token mint endpoint ([0c62565](https://github.com/get-bundled/bundled/commit/0c625655a4b3603550311746489fb144828a311e))
+
+
+
 ### [0.1.4](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.1.3...@getbundled/js@0.1.4) (2021-12-19)
 
 
