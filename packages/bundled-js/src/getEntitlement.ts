@@ -21,7 +21,7 @@ const CreateGetEntitlement = (api: AxiosInstance) => {
       }
 
       const response = await api.get<Omit<Required<GetEntitlementResponse>, 'error'>>(
-        '/api/entitlements',
+        '/api/entitlement',
         {
           params: {
             mintId,
