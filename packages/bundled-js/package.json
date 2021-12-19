@@ -1,6 +1,6 @@
 {
   "name": "@getbundled/js",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "The standard Javascript SDK library for Bundled",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
