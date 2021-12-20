@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.2.2](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.1...@getbundled/js@0.2.2) (2021-12-20)
+
+
+### Bug Fixes
+
+* headers not sent to mint request ([caa63eb](https://github.com/get-bundled/bundled/commit/caa63eb4918702ca72528b7cbf9c47a3ced43590))
+
+
+
 ### [0.2.1](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.0...@getbundled/js@0.2.1) (2021-12-20)
 
 
