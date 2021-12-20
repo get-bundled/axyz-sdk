@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.2.5](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.4...@getbundled/js@0.2.5) (2021-12-20)
+
+
+### Bug Fixes
+
+* bundledUserID not setting on SDK instance ([ba6b535](https://github.com/get-bundled/bundled/commit/ba6b535f33f82a3aa7fc518320698468ab9649f9))
+
+
+
 ### [0.2.4](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.3...@getbundled/js@0.2.4) (2021-12-20)
 
 
