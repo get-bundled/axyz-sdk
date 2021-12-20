@@ -39,8 +39,8 @@ export const BundledSDK = (
     connect: CreateConnect(api, (id) => {
       sdk.bundledUserId = id;
     }),
-    getEntitlement: CreateGetEntitlement(api),
-    mintToken: CreateMintToken(api),
+    getEntitlement: CreateGetEntitlement(api, () => sdk.bundledUserId),
+    mintToken: CreateMintToken(api, () => sdk.bundledUserId),
   };
 
   return sdk;

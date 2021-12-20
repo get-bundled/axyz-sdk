@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { config } from './config';
+import type { BundledSDKInstance } from '.';
 
 interface GetEntitlementResponse {
   entitled: true;
@@ -11,10 +11,15 @@ export interface GetEntitlementResult extends Partial<GetEntitlementResponse> {
   error?: string;
 }
 
-const CreateGetEntitlement = (api: AxiosInstance) => {
+const CreateGetEntitlement = (
+  api: AxiosInstance,
+  getBundledUserId: () => BundledSDKInstance['bundledUserId']
+) => {
   const getEntitlement = async (mintId: string): Promise<GetEntitlementResult> => {
     try {
-      if (!config.bundledUserId) {
+      const bundledUserId = getBundledUserId();
+
+      if (!bundledUserId) {
         return {
           error: 'Bundled UserID is not set. Please ensure you have called "connect" first.',
         };
@@ -26,7 +31,7 @@ const CreateGetEntitlement = (api: AxiosInstance) => {
           params: {
             mintId,
           },
-          headers: { 'x-user-id': config.bundledUserId },
+          headers: { 'x-user-id': bundledUserId },
         }
       );
 
