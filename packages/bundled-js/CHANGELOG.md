@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.2.3](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.2...@getbundled/js@0.2.3) (2021-12-20)
+
+
+### Bug Fixes
+
+* config not properly updating ([0a2c102](https://github.com/get-bundled/bundled/commit/0a2c10263d7435e603d8bada4467be79167e5baa))
+
+
+
 ### [0.2.2](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.1...@getbundled/js@0.2.2) (2021-12-20)
 
 
