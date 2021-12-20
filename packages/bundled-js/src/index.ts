@@ -1,6 +1,5 @@
 import axios from 'axios';
 import CreateConnect, { ConnectResult } from './connect';
-import { config, setBundledUserId } from './config';
 import CreateGetEntitlement, { GetEntitlementResult } from './getEntitlement';
 import CreateMintToken from './mintToken';
 
@@ -15,14 +14,18 @@ enum BaseURL {
   prod = 'https://api.getbundled.co',
 }
 
+export interface BundledSDKInstance {
+  apiKey: string;
+  connect: ReturnType<typeof CreateConnect>;
+  getEntitlement: ReturnType<typeof CreateGetEntitlement>;
+  mintToken: ReturnType<typeof CreateMintToken>;
+  bundledUserId?: string;
+}
+
 export const BundledSDK = (
   apiKey: string,
   { environment, bundledUserId }: Options = { environment: 'local' }
 ) => {
-  if (bundledUserId) {
-    setBundledUserId(bundledUserId);
-  }
-
   const api = axios.create({
     baseURL: BaseURL[environment],
     headers: {
@@ -30,23 +33,18 @@ export const BundledSDK = (
     },
   });
 
-  const connect = CreateConnect(api);
-  const getEntitlement = CreateGetEntitlement(api);
-  const mintToken = CreateMintToken(api);
-
-  const sdk = {
+  const sdk: BundledSDKInstance = {
     apiKey,
-    bundledUserId: config.bundledUserId,
-    connect,
-    getEntitlement,
-    mintToken,
-    config,
+    bundledUserId,
+    connect: CreateConnect(api, (id) => {
+      sdk.bundledUserId = id;
+    }),
+    getEntitlement: CreateGetEntitlement(api),
+    mintToken: CreateMintToken(api),
   };
 
   return sdk;
 };
-
-export type BundledSDKInstance = ReturnType<typeof BundledSDK>;
 
 export default BundledSDK;
 

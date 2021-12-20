@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from 'axios';
-import { setBundledUserId } from './config';
 
 export interface ConnectResponse {
   id: string;
@@ -10,7 +9,7 @@ export interface ConnectResult {
   error?: string;
 }
 
-const CreateConnect = (api: AxiosInstance) => {
+const CreateConnect = (api: AxiosInstance, setBundledUserId: (id: string) => void) => {
   const connect = async (username: string, password: string): Promise<ConnectResult> => {
     if (!username) {
       return { error: 'Username is required' };
