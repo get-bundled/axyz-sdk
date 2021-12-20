@@ -47,6 +47,7 @@ export interface BundledSDKInstance {
   apiKey: string;
   connect: ReturnType<typeof CreateConnect>;
   getEntitlement: ReturnType<typeof CreateGetEntitlement>;
+  mintToken: ReturnType<typeof CreateMintToken>;
   bundledUserId?: string;
 }
 
