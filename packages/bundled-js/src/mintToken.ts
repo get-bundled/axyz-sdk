@@ -21,6 +21,7 @@ const CreateMintToken = (api: AxiosInstance) => {
 
       const response = await api.post<Omit<Required<MintTokenResponse>, 'error'>>(
         `/api/mint/${mintId}`,
+        undefined,
         {
           headers: { 'x-user-id': config.bundledUserId },
         }
