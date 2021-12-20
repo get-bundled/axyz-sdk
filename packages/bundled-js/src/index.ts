@@ -1,6 +1,6 @@
 import axios from 'axios';
 import CreateConnect, { ConnectResult } from './connect';
-import config from './config';
+import { config, setBundledUserId } from './config';
 import CreateGetEntitlement, { GetEntitlementResult } from './getEntitlement';
 import CreateMintToken from './mintToken';
 
@@ -20,7 +20,7 @@ export const BundledSDK = (
   { environment, bundledUserId }: Options = { environment: 'local' }
 ) => {
   if (bundledUserId) {
-    config.bundledUserId = bundledUserId;
+    setBundledUserId(bundledUserId);
   }
 
   const api = axios.create({
@@ -34,22 +34,19 @@ export const BundledSDK = (
   const getEntitlement = CreateGetEntitlement(api);
   const mintToken = CreateMintToken(api);
 
-  return {
+  const sdk = {
     apiKey,
     bundledUserId: config.bundledUserId,
     connect,
     getEntitlement,
     mintToken,
+    config,
   };
+
+  return sdk;
 };
 
-export interface BundledSDKInstance {
-  apiKey: string;
-  connect: ReturnType<typeof CreateConnect>;
-  getEntitlement: ReturnType<typeof CreateGetEntitlement>;
-  mintToken: ReturnType<typeof CreateMintToken>;
-  bundledUserId?: string;
-}
+export type BundledSDKInstance = ReturnType<typeof BundledSDK>;
 
 export default BundledSDK;
 

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import config from './config';
+import { setBundledUserId } from './config';
 
 export interface ConnectResponse {
   id: string;
@@ -26,7 +26,7 @@ const CreateConnect = (api: AxiosInstance) => {
 
       const { id } = response.data;
 
-      config.bundledUserId = id;
+      setBundledUserId(id);
 
       return {
         id,
