@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.2.4](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.3...@getbundled/js@0.2.4) (2021-12-20)
+
+
+### Bug Fixes
+
+* attempt to fix instance user ID ([c852b82](https://github.com/get-bundled/bundled/commit/c852b82f505105a72affa5848a9148e055be944e))
+
+
+
 ### [0.2.3](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.2...@getbundled/js@0.2.3) (2021-12-20)
 
 
