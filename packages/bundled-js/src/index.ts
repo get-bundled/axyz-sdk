@@ -20,6 +20,7 @@ export interface BundledSDKInstance {
   getEntitlement: ReturnType<typeof CreateGetEntitlement>;
   mintToken: ReturnType<typeof CreateMintToken>;
   bundledUserId?: string;
+  publicKey?: string;
 }
 
 export const BundledSDK = (
@@ -36,8 +37,9 @@ export const BundledSDK = (
   const sdk: BundledSDKInstance = {
     apiKey,
     bundledUserId,
-    connect: CreateConnect(api, (id) => {
+    connect: CreateConnect(api, (id: string, publicKey: string) => {
       sdk.bundledUserId = id;
+      sdk.publicKey = publicKey;
     }),
     getEntitlement: CreateGetEntitlement(api, () => sdk.bundledUserId),
     mintToken: CreateMintToken(api, () => sdk.bundledUserId),

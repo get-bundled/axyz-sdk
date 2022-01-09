@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 
 export interface ConnectResponse {
   id: string;
+  publicKey: string;
 }
 
 export interface ConnectResult {
@@ -9,7 +10,10 @@ export interface ConnectResult {
   error?: string;
 }
 
-const CreateConnect = (api: AxiosInstance, setBundledUserId: (id: string) => void) => {
+const CreateConnect = (
+  api: AxiosInstance,
+  setBundledUserId: (id: string, publicKey: string) => void
+) => {
   const connect = async (username: string, password: string): Promise<ConnectResult> => {
     if (!username) {
       return { error: 'Username is required' };
@@ -23,9 +27,9 @@ const CreateConnect = (api: AxiosInstance, setBundledUserId: (id: string) => voi
         auth: { username, password },
       });
 
-      const { id } = response.data;
+      const { id, publicKey } = response.data;
 
-      setBundledUserId(id);
+      setBundledUserId(id, publicKey);
 
       return {
         id,
