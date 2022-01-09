@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.0](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.5...@getbundled/js@0.3.0) (2022-01-09)
+
+
+### Features
+
+* add public key to SDK ([dce3bc3](https://github.com/get-bundled/bundled/commit/dce3bc399f549ab0ccf59087313a04d4e3b481ab))
+
+
+
 ### [0.2.5](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.4...@getbundled/js@0.2.5) (2021-12-20)
 
 
