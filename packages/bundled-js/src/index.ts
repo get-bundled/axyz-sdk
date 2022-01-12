@@ -44,7 +44,7 @@ export const BundledSDK = (
     }),
     getEntitlement: CreateGetEntitlement(api, () => sdk.bundledUserId),
     mintToken: CreateMintToken(api, () => sdk.bundledUserId),
-    version: 0.3.1
+    version: '0.3.1',
   };
 
   return sdk;
