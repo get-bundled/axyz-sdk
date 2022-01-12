@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.3.1](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.3.0...@getbundled/js@0.3.1) (2022-01-12)
+
+
+### Bug Fixes
+
+* add version to SDK ([2256bc8](https://github.com/get-bundled/bundled/commit/2256bc894c1c6fdb61178ddd425c10971ae75c96))
+* compile errors ([9ea04c4](https://github.com/get-bundled/bundled/commit/9ea04c4963d6b125a3811810a9026983042f307f))
+
+
+
 ## [0.3.0](https://github.com/get-bundled/bundled/compare/@getbundled/js@0.2.5...@getbundled/js@0.3.0) (2022-01-09)
 
 
