@@ -1,16 +1,16 @@
-name: Release
+name: Release Canary
 
 on:
   push:
     branches:
-      - main
+      - canary
     paths:
       - "packages/**"
   workflow_dispatch:
 
 jobs:
   publish-gpr:
-    name: Create Release and Publish to NPM
+    name: Create Canary Release and Publish to NPM
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -50,7 +50,7 @@ jobs:
 
       - name: Bump versions and publish packages
         run: |
-          pnpm version-stable:ci
+          pnpm version-canary:ci
           pnpm publish:ci
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
