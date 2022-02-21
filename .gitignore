@@ -135,3 +135,5 @@ terraform.rc
 
 **/*.tfvars
 .turbo
+
+pnpm-global
