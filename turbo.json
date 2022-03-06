@@ -1,12 +1,7 @@
 {
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
+      "outputs": ["lib/**"]
     },
     "lint": {
       "outputs": []
@@ -15,21 +10,13 @@
       "outputs": []
     },
     "test": {
-      "outputs": []
-    },
-    "coverage": {
-      "outputs": [
-        "coverage/**"
-      ]
+      "outputs": ["coverage/**"]
     },
     "precommit": {
       "outputs": []
     },
     "prepublish": {
       "outputs": []
-    },
-    "dev": {
-      "cache": false
     }
   }
 }

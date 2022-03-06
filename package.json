@@ -1,5 +1,5 @@
 {
-  "name": "bundled-packages",
+  "name": "axyz-packages",
   "version": "1.0.0",
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
@@ -12,7 +12,6 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "dev": "turbo run dev --parallel --no-cache",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
