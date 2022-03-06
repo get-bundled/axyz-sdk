@@ -41,12 +41,17 @@ jobs:
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          pnpm install
 
       - name: Run test/lint/type-check and build
         run: |
-          pnpm check
-          pnpm build
+          # We have to run build first because sometiems all we may have changed multiple packages
+          # and want to use the latest versions (the ones available on this PR). As a result he
+          # packages aren't in the NPM registry and are linked locally. It's not ideal but the flow
+          # works. Worst case the build step fails because of type-checks being bad
+          pnpm run build
+          pnpm run check
 
       - name: Bump versions and publish packages
         run: |

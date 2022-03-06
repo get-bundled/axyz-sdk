@@ -1,0 +1,35 @@
+{
+  "pipeline": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "type-check": {
+      "outputs": []
+    },
+    "test": {
+      "outputs": []
+    },
+    "coverage": {
+      "outputs": [
+        "coverage/**"
+      ]
+    },
+    "precommit": {
+      "outputs": []
+    },
+    "prepublish": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    }
+  }
+}
