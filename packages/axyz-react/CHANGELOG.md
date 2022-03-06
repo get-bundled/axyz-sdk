@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.1.0-canary.1 (2022-03-06)
+
+
+### Features
+
+* axys react and js ([c6e9dd9](https://github.com/get-bundled/bundled-sdk/commit/c6e9dd9226d57150fcfa37c40e94203a1ed50bca))
+
+
+### Bug Fixes
+
+* dependencies causing turbo to hang ([0cc3e6b](https://github.com/get-bundled/bundled-sdk/commit/0cc3e6b40397d9764a1be6c8d2348102bb92ea30))
+
+
+
 ## 0.1.0-canary.0 (2022-03-04)
 
 
