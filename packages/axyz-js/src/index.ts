@@ -19,7 +19,6 @@ import Context from './utils/context';
 import { BundledAPIUrls, LOCAL, DEVELOPMENT, PRODUCTION } from './constants';
 import type { Wallet } from './types';
 import { getStoredWalletName, setStoredWalletName } from './utils/localStorage';
-import { CreateCheckEntitlementByValue } from './actions/checkEntitlementByValue';
 
 interface Options {
   environment?: typeof LOCAL | typeof DEVELOPMENT | typeof PRODUCTION;
@@ -57,7 +56,6 @@ export const AxyzSDK = (
     apiKey,
     version: process.env.PACKAGE_VERSION!,
     checkEntitlement: CreateCheckEntitlement(api, context),
-    checkEntitlementByValue: CreateCheckEntitlementByValue(api, context),
     getEntitlementByValue: CreateGetEntitlementByValue(context),
     getEntitlements: CreateGetEntitlements(api, context),
     mintToken: CreateMintToken(api, context),
