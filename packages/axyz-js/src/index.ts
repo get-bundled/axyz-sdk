@@ -17,8 +17,9 @@ import {
 } from './actions';
 import Context from './utils/context';
 import { BundledAPIUrls, LOCAL, DEVELOPMENT, PRODUCTION } from './constants';
-import type { Wallet } from './types';
 import { getStoredWalletName, setStoredWalletName } from './utils/localStorage';
+
+import type { Wallet } from './types';
 
 interface Options {
   environment?: typeof LOCAL | typeof DEVELOPMENT | typeof PRODUCTION;
@@ -93,6 +94,8 @@ export const AxyzSDK = (
 
   return sdk;
 };
+
+export * from './types';
 
 export type AxyzSDKInstance = ReturnType<typeof AxyzSDK>;
 
