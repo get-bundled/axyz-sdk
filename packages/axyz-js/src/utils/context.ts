@@ -4,7 +4,7 @@ import { AxiosInstance } from 'axios';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { getWalletAdapters } from '@solana/wallet-adapter-wallets';
 import { findWallet } from './wallet';
-import { Entitlements, EntitlementMapping, Wallet } from '../types';
+import { EntitlementKeys, Wallet } from '../types';
 import { getStoredWalletName } from './localStorage';
 
 export interface BundledContextArguments {
@@ -23,8 +23,7 @@ export interface BundledContext extends BundledContextArguments {
   wallet?: Wallet;
   connecting?: boolean;
   disconnecting?: boolean;
-  entitlements?: Entitlements;
-  entitlementList?: EntitlementMapping;
+  entitlements?: EntitlementKeys;
 }
 
 class Context {
