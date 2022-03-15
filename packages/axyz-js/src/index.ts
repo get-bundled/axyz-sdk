@@ -20,6 +20,7 @@ import { BundledAPIUrls, LOCAL, DEVELOPMENT, PRODUCTION } from './constants';
 import { getStoredWalletName, setStoredWalletName } from './utils/localStorage';
 
 import type { Wallet } from './types';
+import { loadStoredSignatureAndMessage } from './utils/signature';
 
 interface Options {
   environment?: typeof LOCAL | typeof DEVELOPMENT | typeof PRODUCTION;
@@ -52,6 +53,13 @@ export const AxyzSDK = (
     solanaNetwork,
     autoConnect,
   });
+
+  // We store a nonce message and signature in session storage to avoid
+  // having to re-sign the same message over and over again. This is only
+  // persisted in session storage so that it is short-lived. This prevents
+  // attacks where someone could potentially perform frequency analysis on
+  // the signature.
+  loadStoredSignatureAndMessage(context);
 
   const sdk = {
     apiKey,

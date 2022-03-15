@@ -24,6 +24,9 @@ export interface BundledContext extends BundledContextArguments {
   connecting?: boolean;
   disconnecting?: boolean;
   entitlements?: EntitlementKeys;
+  signature?: string;
+  signaturePublicKey?: PublicKey;
+  nonceMessage?: string;
 }
 
 class Context {
