@@ -42,6 +42,7 @@ const WalletProvider: FC<Props> = ({ children, onError, autoConnect }) => {
     onError,
     setConnected,
     wallet,
+    setWallet,
   });
 
   const selectWallet = useCallback(

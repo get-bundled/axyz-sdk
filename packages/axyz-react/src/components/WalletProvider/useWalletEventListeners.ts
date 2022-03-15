@@ -8,22 +8,34 @@ interface Args {
   onError?: (error: WalletError) => void;
   setConnected: (connected: boolean) => void;
   wallet: Adapter | undefined;
+  setWallet: (wallet: Adapter | undefined) => void;
 }
-const useWalletEventListeners = ({ axyz, isUnloading, onError, setConnected, wallet }: Args) => {
+const useWalletEventListeners = ({
+  axyz,
+  isUnloading,
+  onError,
+  setConnected,
+  wallet,
+  setWallet,
+}: Args) => {
   // Handle the adapter's error event, and local errors
   const handleError = useCallback(
     (error: WalletError) => {
       // Call onError unless the window is unloading
-      // eslint-disable-next-line no-console
       if (!isUnloading.current) {
+        if (wallet) {
+          axyz.clearWallet(wallet);
+          setWallet(undefined);
+        }
         if (onError) {
           onError(error);
         } else {
+          // eslint-disable-next-line no-console
           console.error(error);
         }
       }
     },
-    [isUnloading, onError]
+    [isUnloading, onError, wallet, axyz, setWallet]
   );
 
   // Handle the adapter's connect event
