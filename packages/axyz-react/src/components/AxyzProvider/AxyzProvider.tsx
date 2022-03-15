@@ -3,6 +3,7 @@ import Axyz from '@axyzsdk/js';
 import type { AxyzSDKOptions } from '@axyzsdk/js';
 import { createTheme, NextUIProvider } from '@nextui-org/react';
 
+import { WalletError } from '@solana/wallet-adapter-base';
 import ConnectionProvider from '../ConnectionProvider';
 import WalletProvider from '../WalletProvider';
 import ModalConnect from '../ModalConnect';
@@ -16,6 +17,7 @@ interface Props extends AxyzSDKOptions {
   darkMode?: boolean;
   autoConnect?: boolean;
   connectModal?: boolean;
+  onConnectError?: (error: WalletError) => void;
 }
 
 const AxyzProvider: React.FC<Props> = ({
@@ -23,6 +25,7 @@ const AxyzProvider: React.FC<Props> = ({
   environment,
   solanaNetwork,
   apiKey,
+  onConnectError,
   connectModal = true,
   autoConnect = true,
   darkMode = true,
@@ -51,7 +54,7 @@ const AxyzProvider: React.FC<Props> = ({
       <ThemeController darkMode={darkMode} />
       <AxyzContext.Provider value={axyz}>
         <ConnectionProvider connection={connection}>
-          <WalletProvider autoConnect={autoConnect}>
+          <WalletProvider autoConnect={autoConnect} onError={onConnectError}>
             <ModalProvider>
               {connectModal && <ModalConnect />}
               {children}

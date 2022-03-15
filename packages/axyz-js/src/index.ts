@@ -2,12 +2,11 @@ import axios from 'axios';
 import { clusterApiUrl, Cluster, Connection } from '@solana/web3.js';
 
 import {
-  CreateCheckEntitlement,
+  CreateCheckEntitlements,
   CreateMintToken,
   CreateGetEntitlements,
   CreateConnectWallet,
   CreateDisconnectWallet,
-  CreateGetEntitlementByValue,
   CreateAutoConnectWallet,
   CreateSendTransaction,
   CreateSignAllTransactions,
@@ -17,9 +16,10 @@ import {
 } from './actions';
 import Context from './utils/context';
 import { BundledAPIUrls, LOCAL, DEVELOPMENT, PRODUCTION } from './constants';
-import type { Wallet } from './types';
 import { getStoredWalletName, setStoredWalletName } from './utils/localStorage';
-import { CreateCheckEntitlementByValue } from './actions/checkEntitlementByValue';
+
+import type { Wallet } from './types';
+import { loadStoredSignatureAndMessage } from './utils/signature';
 
 interface Options {
   environment?: typeof LOCAL | typeof DEVELOPMENT | typeof PRODUCTION;
@@ -53,12 +53,17 @@ export const AxyzSDK = (
     autoConnect,
   });
 
+  // We store a nonce message and signature in session storage to avoid
+  // having to re-sign the same message over and over again. This is only
+  // persisted in session storage so that it is short-lived. This prevents
+  // attacks where someone could potentially perform frequency analysis on
+  // the signature.
+  loadStoredSignatureAndMessage(context);
+
   const sdk = {
     apiKey,
     version: process.env.PACKAGE_VERSION!,
-    checkEntitlement: CreateCheckEntitlement(api, context),
-    checkEntitlementByValue: CreateCheckEntitlementByValue(api, context),
-    getEntitlementByValue: CreateGetEntitlementByValue(context),
+    checkEntitlements: CreateCheckEntitlements(api, context),
     getEntitlements: CreateGetEntitlements(api, context),
     mintToken: CreateMintToken(api, context),
     connectWallet: CreateConnectWallet(context),
@@ -95,6 +100,9 @@ export const AxyzSDK = (
 
   return sdk;
 };
+
+export * from './types';
+export type { CheckEntitlementsResult } from './actions';
 
 export type AxyzSDKInstance = ReturnType<typeof AxyzSDK>;
 
