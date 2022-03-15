@@ -6,7 +6,7 @@ export interface GetEntitlementKeysResponse {
   entitlements: EntitlementKeys;
 }
 
-const getEntitlementKeys = async (api: AxiosInstance, context: Context) => {
+export const getEntitlementKeys = async (api: AxiosInstance, context: Context) => {
   const response = await api.get<GetEntitlementKeysResponse>('/entitlements/keys');
 
   const { entitlements } = response.data;
@@ -15,5 +15,3 @@ const getEntitlementKeys = async (api: AxiosInstance, context: Context) => {
 
   return entitlements;
 };
-
-export default getEntitlementKeys;

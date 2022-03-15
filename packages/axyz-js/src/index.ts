@@ -102,6 +102,7 @@ export const AxyzSDK = (
 };
 
 export * from './types';
+export type { CheckEntitlementsResult } from './actions';
 
 export type AxyzSDKInstance = ReturnType<typeof AxyzSDK>;
 
