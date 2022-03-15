@@ -1,5 +1,6 @@
 import Context from '../utils/context';
 import { setStoredWalletName } from '../utils/localStorage';
+import { clearStoredSignature } from '../utils/signature';
 
 // eslint-disable-next-line import/prefer-default-export
 export const CreateDisconnectWallet = (context: Context) => {
@@ -12,6 +13,7 @@ export const CreateDisconnectWallet = (context: Context) => {
     }
 
     setStoredWalletName(null);
+    clearStoredSignature(context);
 
     await wallet.disconnect();
 
