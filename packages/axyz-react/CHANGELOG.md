@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.1.1...@axyzsdk/react@0.2.0) (2022-03-15)
+
+
+### Features
+
+* support entitlement array for validation ([0fd4977](https://github.com/get-bundled/axyz-sdk/commit/0fd497792130bfa160dceb74bb3aef43177acc90))
+
+
+### Bug Fixes
+
+* support onConnectError for provider ([ad31335](https://github.com/get-bundled/axyz-sdk/commit/ad3133546a418b1e8b7d9c2309dc4db6a780ae13))
+* wallet does not reset on error ([c00d729](https://github.com/get-bundled/axyz-sdk/commit/c00d72987b50e81bb9fc213068f242d969fdbd39))
+
+
+
 ### [0.1.1](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.1.0...@axyzsdk/react@0.1.1) (2022-03-06)
 
 
