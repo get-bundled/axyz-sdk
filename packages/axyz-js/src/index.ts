@@ -2,7 +2,7 @@ import axios from 'axios';
 import { clusterApiUrl, Cluster, Connection } from '@solana/web3.js';
 
 import {
-  CreateCheckEntitlement,
+  CreateCheckEntitlements,
   CreateMintToken,
   CreateGetEntitlements,
   CreateConnectWallet,
@@ -63,7 +63,7 @@ export const AxyzSDK = (
   const sdk = {
     apiKey,
     version: process.env.PACKAGE_VERSION!,
-    checkEntitlement: CreateCheckEntitlement(api, context),
+    checkEntitlements: CreateCheckEntitlements(api, context),
     getEntitlements: CreateGetEntitlements(api, context),
     mintToken: CreateMintToken(api, context),
     connectWallet: CreateConnectWallet(context),

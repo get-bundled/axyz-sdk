@@ -1,5 +1,5 @@
 export * from './mintToken';
-export * from './checkEntitlement';
+export * from './checkEntitlements';
 export * from './getEntitlements';
 export * from './connectWallet';
 export * from './autoConnectWallet';

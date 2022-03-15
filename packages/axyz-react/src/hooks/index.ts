@@ -4,4 +4,4 @@ export { default as useWallet } from './useWallet';
 export { default as useAutoConnect } from './useAutoConnect';
 export { default as useSortedWallets } from './useSortedWallets';
 export { default as useUnloading } from './useUnloading';
-export { default as useCheckEntitlement } from './useCheckEntitlement';
+export { default as useCheckEntitlements } from './useCheckEntitlements';
