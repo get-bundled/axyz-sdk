@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.2.1](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.2.0...@axyzsdk/react@0.2.1) (2022-03-17)
+
+
+### Bug Fixes
+
+* only allow wallets that support sign message ([1a07d98](https://github.com/get-bundled/axyz-sdk/commit/1a07d98038ae7ccd17564db0ac63f11064eefe5d))
+* show undetected wallets if no others available ([11489ba](https://github.com/get-bundled/axyz-sdk/commit/11489ba6854150ce74b0e62bfd7cda12e5e824ec))
+
+
+
 ## [0.2.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.1.1...@axyzsdk/react@0.2.0) (2022-03-15)
 
 
