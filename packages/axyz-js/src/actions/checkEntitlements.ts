@@ -19,10 +19,6 @@ export const CreateCheckEntitlements = (api: AxiosInstance, context: Context) =>
       return getErrorState('Public key or wallet not found. Please ensure a wallet is connected.');
     }
 
-    if (!('signMessage' in wallet)) {
-      return getErrorState('Wallet does not support signing.');
-    }
-
     if (!entitlementKeys) {
       return getErrorState('No entitlement keys provided');
     }

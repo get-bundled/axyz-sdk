@@ -1,7 +1,7 @@
 import solanaWeb3, { PublicKey } from '@solana/web3.js';
 import { AxiosInstance } from 'axios';
 
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { BaseMessageSignerWalletAdapter, WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { getWalletAdapters } from '@solana/wallet-adapter-wallets';
 import { findWallet } from './wallet';
 import { EntitlementKeys, Wallet } from '../types';
@@ -33,7 +33,9 @@ class Context {
   context: BundledContext;
 
   constructor(defaults: BundledContextArguments) {
-    const wallets = getWalletAdapters({ network: defaults.solanaNetwork as WalletAdapterNetwork });
+    const wallets = getWalletAdapters({
+      network: defaults.solanaNetwork as WalletAdapterNetwork,
+    }).filter((wallet) => 'signMessage' in wallet) as BaseMessageSignerWalletAdapter[];
 
     // If there is a stored wallet name, preload it into the context so it can be auto-connected
     const storedWalletName = getStoredWalletName();

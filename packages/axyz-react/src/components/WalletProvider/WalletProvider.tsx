@@ -1,4 +1,4 @@
-import { Adapter, WalletError, WalletReadyState } from '@solana/wallet-adapter-base';
+import { WalletError, WalletReadyState } from '@solana/wallet-adapter-base';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { WalletContext } from '../../hooks/useWallet';
 import { useAxyz } from '../../hooks';
@@ -19,7 +19,7 @@ const WalletProvider: FC<Props> = ({ children, onError, autoConnect }) => {
 
   const { installedWallets, loadableWallets, undetectedWallets } = useSortedWallets();
 
-  const [wallet, setWallet] = useState<Adapter | undefined>(axyz.wallet);
+  const [wallet, setWallet] = useState<Wallet | undefined>(axyz.wallet);
 
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
@@ -55,7 +55,7 @@ const WalletProvider: FC<Props> = ({ children, onError, autoConnect }) => {
 
   // Connect the adapter to the wallet
   const setWalletAndConnect = useCallback(
-    async (w: Adapter) => {
+    async (w: Wallet) => {
       if (connecting || disconnecting || wallet?.connected) {
         return null;
       }

@@ -1,14 +1,15 @@
 import { AxyzSDKInstance } from '@axyzsdk/js';
-import { Adapter, WalletError } from '@solana/wallet-adapter-base';
+import { WalletError } from '@solana/wallet-adapter-base';
 import { MutableRefObject, useCallback, useEffect } from 'react';
+import { Wallet } from '../../types/wallet';
 
 interface Args {
   axyz: AxyzSDKInstance;
   isUnloading: MutableRefObject<boolean>;
   onError?: (error: WalletError) => void;
   setConnected: (connected: boolean) => void;
-  wallet: Adapter | undefined;
-  setWallet: (wallet: Adapter | undefined) => void;
+  wallet: Wallet | undefined;
+  setWallet: (wallet: Wallet | undefined) => void;
 }
 const useWalletEventListeners = ({
   axyz,

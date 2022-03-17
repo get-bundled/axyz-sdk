@@ -19,6 +19,9 @@ const ModalConnect: FC<Props> = () => {
   );
 
   const close = useCallback(() => setVisible(false), [setVisible]);
+  const notEnoughWallets = readyWallets.length === 0;
+  const hasUndetectedWallets = undetectedWallets.length > 0;
+  const showUndetectedWallets = showMore || (hasUndetectedWallets && notEnoughWallets);
 
   return (
     <div className="axyz-modal-connect">
@@ -53,26 +56,28 @@ const ModalConnect: FC<Props> = () => {
                 <WalletConnectButton wallet={wallet} close={close} />
               </Grid>
             ))}
-            {showMore &&
+            {showUndetectedWallets &&
               undetectedWallets.map((wallet) => (
                 <Grid key={wallet.name} xs={12} justify="center">
                   <WalletConnectButton wallet={wallet} close={close} />
                 </Grid>
               ))}
-            <Grid xs={12} justify="center">
-              <Button
-                css={{
-                  backgroundColor: '$gray400',
-                  '&:hover': {
-                    backgroundColor: '$gray500',
-                  },
-                }}
-                size="lg"
-                onClick={() => setShowMore(!showMore)}
-              >
-                Show {showMore ? 'Less' : 'More'} Options
-              </Button>
-            </Grid>
+            {!notEnoughWallets && hasUndetectedWallets && (
+              <Grid xs={12} justify="center">
+                <Button
+                  css={{
+                    backgroundColor: '$gray400',
+                    '&:hover': {
+                      backgroundColor: '$gray500',
+                    },
+                  }}
+                  size="lg"
+                  onClick={() => setShowMore(!showMore)}
+                >
+                  Show {showMore ? 'Less' : 'More'} Options
+                </Button>
+              </Grid>
+            )}
           </Grid.Container>
         </Modal.Body>
         <Modal.Footer>

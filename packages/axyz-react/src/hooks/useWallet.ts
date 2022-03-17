@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react';
 import { Wallet } from '../types/wallet';
 
 export interface WalletContextState {
-  wallet?: Adapter;
+  wallet?: Wallet;
   installedWallets: Wallet[];
   loadableWallets: Wallet[];
   undetectedWallets: Wallet[];
