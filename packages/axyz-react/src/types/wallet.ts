@@ -1,3 +1,3 @@
-import { Adapter } from '@solana/wallet-adapter-base';
+import { BaseMessageSignerWalletAdapter } from '@solana/wallet-adapter-base';
 
-export type Wallet = Adapter;
+export type Wallet = BaseMessageSignerWalletAdapter;

@@ -7,10 +7,8 @@ export const CreateSignAllTransactions = (context: Context) => {
   const signAllTransactions = (transactions: Transaction[]) => {
     const wallet = checkWalletConnection(context.get('wallet'));
 
-    if (wallet && 'signAllTransactions' in wallet) {
-      return wallet.signAllTransactions(transactions);
-    }
-    return undefined;
+    return wallet.signAllTransactions(transactions);
   };
+
   return signAllTransactions;
 };

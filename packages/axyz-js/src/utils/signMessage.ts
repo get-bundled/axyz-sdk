@@ -5,14 +5,6 @@ import { Wallet } from '../types/wallet';
 import Context from './context';
 import { setStoredSignature } from './signature';
 
-const signMessage = (message: Uint8Array, wallet: Wallet) => {
-  if (wallet && 'signMessage' in wallet) {
-    return wallet.signMessage(message);
-  }
-
-  throw new Error('Wallet does not support signing');
-};
-
 export const messageWithNonce = `Sign this message to prove authenticity (getaxyz.com): ${uuidv4()}`;
 const encoder = new TextEncoder();
 
@@ -28,7 +20,7 @@ export const createOrLoadNonceMessageSignature = async (context: Context, wallet
   const message = encoder.encode(messageWithNonce);
 
   try {
-    const signature = await signMessage(encoder.encode(messageWithNonce), wallet);
+    const signature = await wallet.signMessage(encoder.encode(messageWithNonce));
 
     if (signature) {
       const base58Message = base58.encode(message);
@@ -43,5 +35,3 @@ export const createOrLoadNonceMessageSignature = async (context: Context, wallet
     return { signature: null, message: null, error: e.message || 'Could not sign message.' };
   }
 };
-
-export default signMessage;
