@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/js@0.2.1...@axyzsdk/js@0.3.0) (2022-03-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* API interface has significantly changed to support solana and ethereum
+
+### Features
+
+* support ethereum wallets and validation ([a62d666](https://github.com/get-bundled/axyz-sdk/commit/a62d6660ecf93cba74091d938096c6aa10aa6d96))
+
+
+
 ### [0.2.1](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/js@0.2.0...@axyzsdk/js@0.2.1) (2022-03-17)
 
 
