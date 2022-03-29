@@ -1,9 +1,11 @@
-import { AxiosInstance } from 'axios';
-import checkWalletConnection from '../utils/checkWalletConnection';
+import { AxiosInstance, AxiosRequestHeaders } from 'axios';
+import checkWalletConnection from '../solana/checkWalletConnection';
 import Context from '../utils/context';
-import { createOrLoadNonceMessageSignature } from '../utils/signMessage';
+import { createOrLoadNonceMessageSignature as getSolanaSignature } from '../solana/signMessage';
+import { createOrLoadEthereumNonceMessageSignature as getEthereumSignature } from '../ethereum/signature';
 
-import { MetaplexNFTWithMetadata } from '../types/nft/solana';
+import type { MetaplexNFTWithMetadata } from '../types/solana/nft';
+import type { SupportedChain } from '../types';
 
 export interface ValidateEntitlementsResponse {
   errors: string[];
@@ -26,23 +28,38 @@ export const getErrorState = (error: string) => ({
 export const validateEntitlements = async (
   api: AxiosInstance,
   context: Context,
-  entitlementKeys: string[]
+  entitlementKeys: string[],
+  chains: SupportedChain[]
 ) => {
-  const wallet = checkWalletConnection(context.get('wallet'));
-  const publicKey = context.get('publicKey')!;
-  const { signature, message, error } = await createOrLoadNonceMessageSignature(context, wallet);
+  const headers: AxiosRequestHeaders = {};
 
-  if (!signature || !message || error) {
-    return getErrorState(error || 'Could not create message signature.');
+  if (chains.includes('SOL') && context.getSolana('isConnected')) {
+    const wallet = checkWalletConnection(context.getSolana('wallet'));
+    const publicKey = context.getSolana('publicKey')!;
+    const { signature, message, error } = await getSolanaSignature(context, wallet);
+
+    if (!error && signature && message) {
+      headers['x-sol-signature'] = signature;
+      headers['x-sol-message'] = message;
+      headers['x-sol-public-key'] = publicKey.toBase58();
+    }
+  }
+
+  if (chains.includes('ETH') && context.getEthereum('isConnected')) {
+    const wallet = context.getEthereum('wallet');
+    const address = context.getEthereum('address');
+    const { signature, message, error } = await getEthereumSignature(context, wallet!);
+
+    if (!error && signature && message) {
+      headers['x-eth-signature'] = signature;
+      headers['x-eth-message'] = message;
+      headers['x-eth-address'] = address!;
+    }
   }
 
   const response = await api.get<ValidateEntitlementsResponse>('/entitlements/validate', {
     params: { entitlements: entitlementKeys.join(',') },
-    headers: {
-      'x-signature': signature,
-      'x-message': message,
-      'x-public-key': publicKey.toBase58(),
-    },
+    headers,
   });
 
   return response.data;

@@ -1,7 +1,8 @@
 import { Button, CSS, styled, Text } from '@nextui-org/react';
 import { IoWalletOutline } from 'react-icons/io5';
 import React, { useCallback } from 'react';
-import { useWallet } from '../..';
+import { useWallet as useSolanaWallet } from '../../hooks/solana';
+import { useWallet as useEthereumWallet } from '../../hooks/ethereum';
 import useModal from '../../hooks/useModal';
 
 interface Props {
@@ -16,40 +17,34 @@ const WalletIcon = styled(IoWalletOutline, {
 
 const ConnectButton: React.FC<Props> = ({ onClick, hideAfterConnect, css }) => {
   const { setVisible } = useModal();
-  const { disconnect, connected } = useWallet();
+  const { connected: solanaConnected } = useSolanaWallet();
+  const { connected: ethereumConnected } = useEthereumWallet();
 
   const handleClick = useCallback(() => {
     onClick?.();
     setVisible(true);
   }, [onClick, setVisible]);
 
+  const connected = solanaConnected && ethereumConnected;
+
   if (connected && hideAfterConnect) {
     return null;
-  }
-
-  if (connected) {
-    return (
-      <Button css={css} color="error" onClick={disconnect} size="md" rounded animated>
-        <Text weight="bold" transform="uppercase">
-          Disconnect
-        </Text>{' '}
-      </Button>
-    );
   }
 
   return (
     <Button
       css={css}
       onClick={handleClick}
+      clickable={!connected}
       shadow
       ghost
-      color="gradient"
+      color={connected ? 'success' : 'gradient'}
       size="md"
       rounded
       animated
     >
       <Text color="currentColor" weight="bold" transform="uppercase">
-        Connect
+        {connected ? 'Connected' : 'Connect'}
       </Text>{' '}
       <WalletIcon />
     </Button>

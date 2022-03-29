@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import Axyz from '@axyzsdk/js';
-import type { AxyzSDKOptions } from '@axyzsdk/js';
+import Axyz, { type AxyzSDKOptions } from '@axyzsdk/js';
 import { createTheme, NextUIProvider } from '@nextui-org/react';
 
-import { WalletError } from '@solana/wallet-adapter-base';
-import ConnectionProvider from '../ConnectionProvider';
-import WalletProvider from '../WalletProvider';
+import SolanaConnectionProvider from '../Solana/ConnectionProvider';
+import SolanaWalletProvider from '../Solana/WalletProvider';
+
+import EthereumWalletProvider from '../Ethereum/WalletProvider';
+
 import ModalConnect from '../ModalConnect';
 
 import { AxyzContext } from '../../hooks/useAxyz';
@@ -15,52 +16,53 @@ import ThemeController from './ThemeController';
 interface Props extends AxyzSDKOptions {
   apiKey: string;
   darkMode?: boolean;
-  autoConnect?: boolean;
   connectModal?: boolean;
-  onConnectError?: (error: WalletError) => void;
 }
 
 const AxyzProvider: React.FC<Props> = ({
   children,
   environment,
   solanaNetwork,
+  ethereumChain,
   apiKey,
-  onConnectError,
+  onError,
   connectModal = true,
-  autoConnect = true,
+  ethereumAutoConnect = true,
+  solanaAutoConnect = true,
   darkMode = true,
 }) => {
-  const theme = useMemo(
-    () => createTheme({ type: darkMode ? 'dark' : 'light' }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [darkMode]
-  );
+  const theme = useMemo(() => createTheme({ type: darkMode ? 'dark' : 'light' }), [darkMode]);
 
   const axyz = useMemo(
     () =>
       Axyz(apiKey, {
         environment,
         solanaNetwork,
-        autoConnect,
+        solanaAutoConnect,
+        ethereumChain,
+        ethereumAutoConnect,
+        onError,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [apiKey, environment, solanaNetwork]
   );
 
-  const { connection } = axyz;
+  const { solana } = axyz;
 
   return (
     <NextUIProvider theme={theme} disableBaseline>
       <ThemeController darkMode={darkMode} />
       <AxyzContext.Provider value={axyz}>
-        <ConnectionProvider connection={connection}>
-          <WalletProvider autoConnect={autoConnect} onError={onConnectError}>
-            <ModalProvider>
-              {connectModal && <ModalConnect />}
-              {children}
-            </ModalProvider>
-          </WalletProvider>
-        </ConnectionProvider>
+        <EthereumWalletProvider autoConnect={ethereumAutoConnect}>
+          <SolanaConnectionProvider connection={solana.connection}>
+            <SolanaWalletProvider autoConnect={solanaAutoConnect} onError={onError}>
+              <ModalProvider>
+                {connectModal && <ModalConnect onError={onError} />}
+                {children}
+              </ModalProvider>
+            </SolanaWalletProvider>
+          </SolanaConnectionProvider>
+        </EthereumWalletProvider>
       </AxyzContext.Provider>
     </NextUIProvider>
   );

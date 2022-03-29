@@ -1,27 +1,46 @@
-import React, { FC, useState, useMemo, useCallback } from 'react';
-import { Button, Grid, Modal, Text } from '@nextui-org/react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
+import { Button, Modal, styled, Text, Grid } from '@nextui-org/react';
 
-import { useWallet } from '../../hooks';
-import WalletConnectButton from '../WalletConnectButton';
+import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
 import useModal from '../../hooks/useModal';
+import SolanaModalWalletButtons from '../Solana/ModalWalletButtons';
+import EthereumModalWalletButtons from '../Ethereum/ModalWalletButtons';
+import { useWallet as useEthereumWallet } from '../../hooks/ethereum/useWallet';
 
-interface Props {}
+interface Props {
+  width?: string;
+  onError?: (error: Error) => void;
+}
 
-const ModalConnect: FC<Props> = () => {
-  const { bindings, setVisible } = useModal();
-  const { installedWallets, loadableWallets, undetectedWallets } = useWallet();
+const Stack = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '$4',
+  my: '$4',
+});
 
-  const [showMore, setShowMore] = useState(false);
+const ModalConnect: FC<Props> = ({ width = '500px', onError }) => {
+  const { bindings, setVisible, visible } = useModal();
 
-  const readyWallets = useMemo(
-    () => installedWallets.concat(loadableWallets),
-    [installedWallets, loadableWallets]
-  );
+  const { connected: solanaConnected } = useSolanaWallet();
+  const { connected: ethereumConnected } = useEthereumWallet();
+
+  const [showETHWallets, setShowETHWallets] = useState(!ethereumConnected);
+  const [showSOLWallets, setShowSOLWallets] = useState(!solanaConnected);
+
+  useEffect(() => {
+    if (solanaConnected && !visible) {
+      setShowSOLWallets(false);
+      setShowETHWallets(true);
+    }
+    if (ethereumConnected && !visible) {
+      setShowETHWallets(false);
+      setShowSOLWallets(true);
+    }
+  }, [solanaConnected, ethereumConnected, visible]);
 
   const close = useCallback(() => setVisible(false), [setVisible]);
-  const notEnoughWallets = readyWallets.length === 0;
-  const hasUndetectedWallets = undetectedWallets.length > 0;
-  const showUndetectedWallets = showMore || (hasUndetectedWallets && notEnoughWallets);
 
   return (
     <div className="axyz-modal-connect">
@@ -30,54 +49,70 @@ const ModalConnect: FC<Props> = () => {
         aria-labelledby="modal-title"
         open={bindings.open}
         onClose={bindings.onClose}
+        width={width}
       >
-        <Modal.Header>
+        <Modal.Header css={{ flexDirection: 'column' }}>
           <Text
             h1
             weight="bold"
             css={{
-              ml: '$2',
               textGradient: '45deg, $purple500 -20%, $pink500 100%',
             }}
-            size={32}
+            size={28}
           >
-            Connect your Wallet
+            Connect your wallet
           </Text>
+          <Stack>
+            {!solanaConnected && (
+              <Button
+                size="sm"
+                rounded
+                color={showSOLWallets ? 'success' : 'error'}
+                bordered={!showSOLWallets}
+                shadow
+                css={{ mx: '$2' }}
+                onClick={() => {
+                  setShowSOLWallets(true);
+                  setShowETHWallets(false);
+                }}
+              >
+                Solana
+              </Button>
+            )}
+            {!ethereumConnected && (
+              <Button
+                size="sm"
+                rounded
+                color={showETHWallets ? 'success' : 'error'}
+                bordered={!showETHWallets}
+                shadow
+                css={{ mx: '$2' }}
+                onClick={() => {
+                  setShowETHWallets(true);
+                  setShowSOLWallets(false);
+                }}
+              >
+                Ethereum
+              </Button>
+            )}
+          </Stack>
         </Modal.Header>
         <Modal.Body>
           <Grid.Container
-            css={{ height: 350, overflowY: 'scroll' }}
-            gap={2}
+            css={{
+              height: 300,
+              overflowY: 'auto',
+              my: '$2',
+              py: '$2',
+            }}
+            gap={1}
             alignItems="center"
             justify="center"
+            alignContent="flex-start"
           >
-            {readyWallets.map((wallet) => (
-              <Grid key={wallet.name} xs={12} justify="center">
-                <WalletConnectButton wallet={wallet} close={close} />
-              </Grid>
-            ))}
-            {showUndetectedWallets &&
-              undetectedWallets.map((wallet) => (
-                <Grid key={wallet.name} xs={12} justify="center">
-                  <WalletConnectButton wallet={wallet} close={close} />
-                </Grid>
-              ))}
-            {!notEnoughWallets && hasUndetectedWallets && (
-              <Grid xs={12} justify="center">
-                <Button
-                  css={{
-                    backgroundColor: '$gray400',
-                    '&:hover': {
-                      backgroundColor: '$gray500',
-                    },
-                  }}
-                  size="lg"
-                  onClick={() => setShowMore(!showMore)}
-                >
-                  Show {showMore ? 'Less' : 'More'} Options
-                </Button>
-              </Grid>
-            )}
+            {showSOLWallets && <SolanaModalWalletButtons close={close} />}
+            {showETHWallets && <EthereumModalWalletButtons close={close} onError={onError} />}
+            {!showETHWallets && !showSOLWallets && <Text>No wallets available</Text>}
           </Grid.Container>
         </Modal.Body>
         <Modal.Footer>

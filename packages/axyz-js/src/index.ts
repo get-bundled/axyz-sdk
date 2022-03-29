@@ -1,31 +1,26 @@
 import axios from 'axios';
 import { clusterApiUrl, Cluster, Connection } from '@solana/web3.js';
 
-import {
-  CreateCheckEntitlements,
-  CreateMintToken,
-  CreateGetEntitlements,
-  CreateConnectWallet,
-  CreateDisconnectWallet,
-  CreateAutoConnectWallet,
-  CreateSendTransaction,
-  CreateSignAllTransactions,
-  CreateSignTransaction,
-  CreateSignMessage,
-  CreateClearWallet,
-} from './actions';
 import Context from './utils/context';
-import { BundledAPIUrls, LOCAL, DEVELOPMENT, PRODUCTION } from './constants';
-import { getStoredWalletName, setStoredWalletName } from './utils/localStorage';
 
-import type { Wallet } from './types';
-import { loadStoredSignatureAndMessage } from './utils/signature';
+import { CreateCheckEntitlements, CreateGetEntitlements, solana, ethereum } from './actions';
+
+import { AxyzAPIUrls, LOCAL, DEVELOPMENT, PRODUCTION } from './constants';
+
+import { loadStoredSignatureAndMessage } from './solana/signature';
+import * as solanaStoredWalletName from './solana/storedWalletName';
+
+import type { ErrorCallback } from './types';
+import type { ChainName } from './types/ethereum';
 
 interface Options {
   environment?: typeof LOCAL | typeof DEVELOPMENT | typeof PRODUCTION;
   solanaNetwork?: Cluster;
-  connection?: Connection;
-  autoConnect?: boolean;
+  solanaConnection?: Connection;
+  solanaAutoConnect?: boolean;
+  ethereumChain?: ChainName;
+  ethereumAutoConnect?: boolean;
+  onError?: ErrorCallback;
 }
 
 export const AxyzSDK = (
@@ -33,12 +28,15 @@ export const AxyzSDK = (
   {
     environment = 'local',
     solanaNetwork = 'devnet',
-    connection = new Connection(clusterApiUrl(solanaNetwork)),
-    autoConnect = true,
+    solanaConnection = new Connection(clusterApiUrl(solanaNetwork)),
+    solanaAutoConnect = true,
+    ethereumChain = 'ropsten',
+    ethereumAutoConnect = true,
+    onError,
   }: Options = {}
 ) => {
   const api = axios.create({
-    baseURL: BundledAPIUrls[environment],
+    baseURL: AxyzAPIUrls[environment],
     headers: {
       'x-api-key': apiKey,
     },
@@ -46,11 +44,14 @@ export const AxyzSDK = (
 
   const context = new Context({
     apiKey,
-    connection,
     api,
     environment,
     solanaNetwork,
-    autoConnect,
+    solanaAutoConnect,
+    solanaConnection,
+    ethereumChain,
+    ethereumAutoConnect,
+    onError,
   });
 
   // We store a nonce message and signature in session storage to avoid
@@ -65,36 +66,53 @@ export const AxyzSDK = (
     version: process.env.PACKAGE_VERSION!,
     checkEntitlements: CreateCheckEntitlements(api, context),
     getEntitlements: CreateGetEntitlements(api, context),
-    mintToken: CreateMintToken(api, context),
-    connectWallet: CreateConnectWallet(context),
-    disconnectWallet: CreateDisconnectWallet(context),
-    clearWallet: CreateClearWallet(context),
-    autoConnect: CreateAutoConnectWallet(context),
-    sendTransaction: CreateSendTransaction(context),
-    signMessage: CreateSignMessage(context),
-    signTransaction: CreateSignTransaction(context),
-    signAllTransactions: CreateSignAllTransactions(context),
-    connection,
-    getStoredWalletName,
-    setStoredWalletName,
-    selectWallet: (wallet: Wallet) => {
-      setStoredWalletName(wallet.name);
-      context.set('wallet', wallet);
-    },
     get entitlements() {
       return context.get('entitlements');
     },
-    get isConnected() {
-      return context.get('isConnected');
+
+    solana: {
+      connection: solanaConnection,
+      getStoredWalletName: solanaStoredWalletName.getStoredWalletName,
+      setStoredWalletName: solanaStoredWalletName.setStoredWalletName,
+      mintToken: solana.CreateMintToken(api, context),
+      connectWallet: solana.CreateConnectWallet(context),
+      disconnectWallet: solana.CreateDisconnectWallet(context),
+      clearWallet: solana.CreateClearWallet(context),
+      autoConnect: solana.CreateAutoConnectWallet(context),
+      sendTransaction: solana.CreateSendTransaction(context),
+      signMessage: solana.CreateSignMessage(context),
+      signTransaction: solana.CreateSignTransaction(context),
+      signAllTransactions: solana.CreateSignAllTransactions(context),
+      selectWallet: solana.CreateSelectWallet(context),
+      get isConnected() {
+        return context.getSolana('isConnected');
+      },
+      get publicKey() {
+        return context.getSolana('publicKey');
+      },
+      get wallet() {
+        return context.getSolana('wallet');
+      },
+      get wallets() {
+        return context.getSolana('wallets');
+      },
     },
-    get publicKey() {
-      return context.get('publicKey');
-    },
-    get wallet() {
-      return context.get('wallet');
-    },
-    get wallets() {
-      return context.get('wallets');
+
+    // ETHEREUM
+    ethereum: {
+      connectWallet: ethereum.CreateConnectWallet(context),
+      get isConnected() {
+        return context.getEthereum('isConnected');
+      },
+      get address() {
+        return context.getEthereum('address');
+      },
+      get wallet() {
+        return context.getEthereum('wallet');
+      },
+      get wallets() {
+        return context.getEthereum('wallets');
+      },
     },
   } as const;
 
@@ -102,6 +120,7 @@ export const AxyzSDK = (
 };
 
 export * from './types';
+
 export type { CheckEntitlementsResult } from './actions';
 
 export type AxyzSDKInstance = ReturnType<typeof AxyzSDK>;

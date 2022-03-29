@@ -26,7 +26,9 @@ module.exports = {
       files: ['**/*.ts', '**/*.tsx'],
       plugins: ['@typescript-eslint'],
       extends: ['airbnb-typescript', 'prettier'],
-      rules: {},
+      rules: {
+        '@typescript-eslint/naming-convention': 'off',
+      },
     },
   ],
 };

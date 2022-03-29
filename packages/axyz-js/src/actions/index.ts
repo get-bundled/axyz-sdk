@@ -1,11 +1,8 @@
-export * from './mintToken';
+import * as ethereum from './ethereum';
+import * as solana from './solana';
+
+export { ethereum };
+export { solana };
+
 export * from './checkEntitlements';
 export * from './getEntitlements';
-export * from './connectWallet';
-export * from './autoConnectWallet';
-export * from './sendTransaction';
-export * from './signAllTransactions';
-export * from './signTransaction';
-export * from './signMessage';
-export * from './disconnectWallet';
-export * from './clearWallet';
