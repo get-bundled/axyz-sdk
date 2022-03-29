@@ -18,7 +18,8 @@ export const CreateMintToken = (api: AxiosInstance, context: Context) => {
         };
       }
 
-      return doMintToken(api, mintId, publicKey);
+      const result = await doMintToken(api, mintId, publicKey);
+      return result;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return { error: error.response?.data.message || 'Failed to mint token.' };
