@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.3.0...@axyzsdk/react@0.4.0) (2022-04-01)
+
+
+### Features
+
+* support wallet listeners to sync with sdk ([e2477fb](https://github.com/get-bundled/axyz-sdk/commit/e2477fbe868dcfc7a740f8dd53b54529dfa3da7c))
+
+
+### Bug Fixes
+
+* icons using overlapping ids ([80c6710](https://github.com/get-bundled/axyz-sdk/commit/80c67105cf548a41747ef7724783c41b4413cefd))
+
+
+
 ## [0.3.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.2.1...@axyzsdk/react@0.3.0) (2022-03-29)
 
 

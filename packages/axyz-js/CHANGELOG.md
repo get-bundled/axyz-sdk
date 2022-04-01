@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/js@0.3.0...@axyzsdk/js@0.4.0) (2022-04-01)
+
+
+### Features
+
+* ethereum event listeners to sync with react ([f3d479f](https://github.com/get-bundled/axyz-sdk/commit/f3d479f3e099e185d49a2c683e3ba97893c56270))
+
+
+### Bug Fixes
+
+* ethereum support for entitlement validation ([423f698](https://github.com/get-bundled/axyz-sdk/commit/423f6980ddb2ccbb44dd5cae1460fd727af6f829))
+* lint error ([b5a9028](https://github.com/get-bundled/axyz-sdk/commit/b5a902823ad7a76ab995c5df60dfe38f05544b35))
+
+
+
 ## [0.3.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/js@0.2.1...@axyzsdk/js@0.3.0) (2022-03-29)
 
 
