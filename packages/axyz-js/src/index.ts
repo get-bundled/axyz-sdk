@@ -99,21 +99,7 @@ export const AxyzSDK = (
     },
 
     // ETHEREUM
-    ethereum: {
-      connectWallet: ethereum.CreateConnectWallet(context),
-      get isConnected() {
-        return context.getEthereum('isConnected');
-      },
-      get address() {
-        return context.getEthereum('address');
-      },
-      get wallet() {
-        return context.getEthereum('wallet');
-      },
-      get wallets() {
-        return context.getEthereum('wallets');
-      },
-    },
+    ethereum: context.ethereum,
   } as const;
 
   return sdk;

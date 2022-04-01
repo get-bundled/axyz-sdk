@@ -1,31 +1,18 @@
 import { EthereumWallet, ErrorCallback } from '../types';
-import type Context from '../utils/context';
-import {
-  clearStoredEthereumSignature,
-  createOrLoadEthereumNonceMessageSignature,
-} from './signature';
+import type AxyzEthereumContext from './context';
+import { createOrLoadEthereumNonceMessageSignature } from './signature';
 
 const setupWalletListeners = (
   wallet: EthereumWallet,
-  context: Context,
+  context: AxyzEthereumContext,
   onError?: ErrorCallback
 ) => {
-  wallet.on('connect', async () => {
-    const account = await wallet.getAccount();
-
-    if (!account) {
-      onError?.(new Error('Something went wrong connecting.'));
-      return;
-    }
-
-    context.setEthereum('isConnected', true);
-    context.setEthereum('wallet', wallet);
-    context.setEthereum('address', account);
-
-    createOrLoadEthereumNonceMessageSignature(context, wallet);
-  });
-
   wallet.on('change', async () => {
+    // This event fires when first connecting to some wallets. We should just ignore it then.
+    if (!context.get('isConnected')) {
+      return;
+    }
+
     const account = await wallet.getAccount();
 
     if (!account) {
@@ -33,18 +20,13 @@ const setupWalletListeners = (
       return;
     }
 
-    clearStoredEthereumSignature(context);
-    createOrLoadEthereumNonceMessageSignature(context, wallet);
+    const { signature, message } = await createOrLoadEthereumNonceMessageSignature(context, wallet);
 
-    context.setEthereum('address', account);
-  });
-
-  wallet.on('disconnect', () => {
-    clearStoredEthereumSignature(context);
-
-    context.setEthereum('isConnected', false);
-    context.setEthereum('address', null);
-    context.setEthereum('wallet', null);
+    context.setMany({
+      address: account,
+      signature,
+      nonceMessage: message,
+    });
   });
 
   wallet.on('error', (error: Error) => {

@@ -7,12 +7,9 @@ import {
   getStoredWalletName as getSolanaStoredWalletName,
 } from '../solana';
 
-import { getWallets as getEthereumWallets } from '../ethereum';
-
 import type { EntitlementKeys, SolanaWallet, ErrorCallback } from '../types';
-import type { ChainName, Address, EthereumWallet, EthereumWallets } from '../types/ethereum';
-import { getSupportedChain } from '../ethereum/chains';
-import setupWalletListeners from '../ethereum/setupWalletListeners';
+import type { ChainName } from '../types/ethereum';
+import AxyzEthereumContext from '../ethereum/context';
 
 export interface AxyzContextArguments {
   apiKey: string;
@@ -45,21 +42,8 @@ export interface AxyzSolanaContext {
   nonceMessage?: string;
 }
 
-export interface AxyzEthereumContext {
-  address?: Address | null;
-  isConnected?: boolean;
-  isConnecting?: boolean;
-  isDiconnecting?: boolean;
-  wallet?: EthereumWallet | null;
-  wallets: EthereumWallets;
-  signature?: string;
-  signatureAddress?: Address;
-  nonceMessage?: string;
-}
-
 export interface AxyzContext extends AxyzContextArguments {
   entitlements?: EntitlementKeys;
-
   solana: AxyzSolanaContext;
   ethereum: AxyzEthereumContext;
 }
@@ -67,13 +51,14 @@ export interface AxyzContext extends AxyzContextArguments {
 class Context {
   context: AxyzContext;
 
+  ethereum: AxyzEthereumContext;
+
+  getEthereum: AxyzEthereumContext['get'];
+
+  setEthereum: AxyzEthereumContext['set'];
+
   constructor(args: AxyzContextArguments) {
-    const ethereumWallets = getEthereumWallets(getSupportedChain(args.ethereumChain));
-
-    ethereumWallets.forEach((wallet) => setupWalletListeners(wallet, this, args.onError));
-
     // If there is a stored wallet name, preload it into the context so it can be auto-connected
-
     const solanaStoredWalletName = getSolanaStoredWalletName();
     const solanaWallets = getSolanaWallets(args.solanaNetwork);
 
@@ -83,9 +68,7 @@ class Context {
 
     this.context = {
       ...args,
-      ethereum: {
-        wallets: ethereumWallets,
-      },
+      ethereum: new AxyzEthereumContext({ chain: args.ethereumChain, onError: args.onError }),
       solana: {
         connection: args.solanaConnection,
         autoConnect: args.solanaAutoConnect,
@@ -94,35 +77,27 @@ class Context {
         wallet: solanaWallet,
       },
     };
+
+    this.ethereum = this.context.ethereum;
+    this.getEthereum = this.context.ethereum.get;
+    this.setEthereum = this.context.ethereum.set;
   }
 
-  get<N extends keyof AxyzContext, I extends AxyzContext[N]>(name: N): I {
-    return this.context[name] as I;
-  }
+  get = <N extends keyof AxyzContext, I extends AxyzContext[N]>(name: N): I =>
+    this.context[name] as I;
 
-  getSolana<N extends keyof AxyzSolanaContext, I extends AxyzSolanaContext[N]>(name: N): I {
-    return this.context.solana[name] as I;
-  }
+  getSolana = <N extends keyof AxyzSolanaContext, I extends AxyzSolanaContext[N]>(name: N): I =>
+    this.context.solana[name] as I;
 
-  getEthereum<N extends keyof AxyzEthereumContext, I extends AxyzEthereumContext[N]>(name: N): I {
-    return this.context.ethereum[name] as I;
-  }
+  getAll = () => this.context;
 
-  getAll() {
-    return this.context;
-  }
-
-  set<N extends keyof AxyzContext>(name: N, item: AxyzContext[N]) {
+  set = <N extends keyof AxyzContext>(name: N, item: AxyzContext[N]) => {
     this.context[name] = item as AxyzContext[N];
-  }
+  };
 
-  setSolana<N extends keyof AxyzSolanaContext>(name: N, item: AxyzSolanaContext[N]) {
+  setSolana = <N extends keyof AxyzSolanaContext>(name: N, item: AxyzSolanaContext[N]) => {
     this.context.solana[name] = item as AxyzSolanaContext[N];
-  }
-
-  setEthereum<N extends keyof AxyzEthereumContext>(name: N, item: AxyzEthereumContext[N]) {
-    this.context.ethereum[name] = item as AxyzEthereumContext[N];
-  }
+  };
 }
 
 export default Context;
