@@ -3,7 +3,7 @@ import { clusterApiUrl, Cluster, Connection } from '@solana/web3.js';
 
 import Context from './utils/context';
 
-import { CreateCheckEntitlements, CreateGetEntitlements, solana, ethereum } from './actions';
+import { CreateCheckEntitlements, CreateGetEntitlements, solana } from './actions';
 
 import { AxyzAPIUrls, LOCAL, DEVELOPMENT, PRODUCTION } from './constants';
 
