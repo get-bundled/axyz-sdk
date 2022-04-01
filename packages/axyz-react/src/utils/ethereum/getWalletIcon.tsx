@@ -6,7 +6,7 @@ import CoinbaseIcon from '../../logos/Coinbase';
 import WalletConnectIcon from '../../logos/Walletconnect';
 
 const getWalletIcon = (
-  wallet?: EthereumWallet,
+  wallet?: EthereumWallet | null,
   iconSize: number | string = 24
 ): JSX.Element | undefined => {
   if (!wallet) {
