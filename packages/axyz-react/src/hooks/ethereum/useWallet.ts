@@ -1,14 +1,19 @@
-import { useAccount } from 'wagmi';
+import { EthereumWallet } from '@axyzsdk/js';
+import { createContext, useContext } from 'react';
 
-// eslint-disable-next-line import/prefer-default-export
-export const useWallet = () => {
-  const [{ data, error, loading }, disconnect] = useAccount();
-
-  return {
-    connected: !!data?.connector,
-    wallet: data?.connector,
-    loading,
-    error,
-    disconnect,
+export interface WalletContextState {
+  wallet?: EthereumWallet | null;
+  connected: boolean;
+  disconnect: () => Promise<void>;
+  loading: boolean;
+  error?: Error;
+  ens?: {
+    avatar?: string | null;
+    name: string;
   };
-};
+  address?: string;
+}
+
+export const WalletContext = createContext<WalletContextState>({} as WalletContextState);
+
+export const useWallet = (): WalletContextState => useContext(WalletContext);

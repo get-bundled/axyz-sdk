@@ -11,7 +11,7 @@ import Solana from '../../logos/Solana';
 import * as styles from './styles';
 
 interface Props {
-  ethereumWallet?: EthereumWallet;
+  ethereumWallet?: EthereumWallet | null;
   solanaWallet?: SolanaWallet;
   ethereumConnected: boolean;
   solanaConnected: boolean;

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import Axyz, { type AxyzSDKOptions } from '@axyzsdk/js';
 import { createTheme, NextUIProvider } from '@nextui-org/react';
 
+import { WagmiProvider } from 'wagmi';
 import SolanaConnectionProvider from '../Solana/ConnectionProvider';
 import SolanaWalletProvider from '../Solana/WalletProvider';
 
@@ -53,16 +54,22 @@ const AxyzProvider: React.FC<Props> = ({
     <NextUIProvider theme={theme} disableBaseline>
       <ThemeController darkMode={darkMode} />
       <AxyzContext.Provider value={axyz}>
-        <EthereumWalletProvider autoConnect={ethereumAutoConnect}>
-          <SolanaConnectionProvider connection={solana.connection}>
-            <SolanaWalletProvider autoConnect={solanaAutoConnect} onError={onError}>
-              <ModalProvider>
-                {connectModal && <ModalConnect onError={onError} />}
-                {children}
-              </ModalProvider>
-            </SolanaWalletProvider>
-          </SolanaConnectionProvider>
-        </EthereumWalletProvider>
+        <WagmiProvider
+          autoConnect={ethereumAutoConnect}
+          connectors={axyz.ethereum.wallets}
+          connectorStorageKey="axyz.ethereum"
+        >
+          <EthereumWalletProvider>
+            <SolanaConnectionProvider connection={solana.connection}>
+              <SolanaWalletProvider autoConnect={solanaAutoConnect} onError={onError}>
+                <ModalProvider>
+                  {connectModal && <ModalConnect onError={onError} />}
+                  {children}
+                </ModalProvider>
+              </SolanaWalletProvider>
+            </SolanaConnectionProvider>
+          </EthereumWalletProvider>
+        </WagmiProvider>
       </AxyzContext.Provider>
     </NextUIProvider>
   );

@@ -7,6 +7,7 @@ const useStatus = () => {
     loading: ethereumLoading,
     wallet: ethereumWallet,
   } = useEthereumWallet();
+
   const {
     connecting: solanaConnecting,
     disconnecting: solanaDisconnecting,
