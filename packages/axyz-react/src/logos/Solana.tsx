@@ -16,7 +16,7 @@ const Solana: React.FC<Props> = ({ width = 40, height = 40, className }) => (
     className={className}
   >
     <linearGradient
-      id="a"
+      id="solana-gradient"
       gradientUnits="userSpaceOnUse"
       x1={360.879}
       y1={351.455}
@@ -40,11 +40,11 @@ const Solana: React.FC<Props> = ({ width = 40, height = 40, className }) => (
     <path
       d="M64.6 237.9c2.4-2.4 5.7-3.8 9.2-3.8h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7c-2.4 2.4-5.7 3.8-9.2 3.8H6.5c-5.8 0-8.7-7-4.6-11.1l62.7-62.7z"
       style={{
-        fill: 'url(#a)',
+        fill: 'url(#solana-gradient)',
       }}
     />
     <linearGradient
-      id="b"
+      id="solana-gradient-2"
       gradientUnits="userSpaceOnUse"
       x1={264.829}
       y1={401.601}
@@ -68,11 +68,11 @@ const Solana: React.FC<Props> = ({ width = 40, height = 40, className }) => (
     <path
       d="M64.6 3.8C67.1 1.4 70.4 0 73.8 0h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7c-2.4 2.4-5.7 3.8-9.2 3.8H6.5c-5.8 0-8.7-7-4.6-11.1L64.6 3.8z"
       style={{
-        fill: 'url(#b)',
+        fill: 'url(#solana-gradient-2)',
       }}
     />
     <linearGradient
-      id="c"
+      id="solana-gradient-3"
       gradientUnits="userSpaceOnUse"
       x1={312.548}
       y1={376.688}
@@ -96,7 +96,7 @@ const Solana: React.FC<Props> = ({ width = 40, height = 40, className }) => (
     <path
       d="M333.1 120.1c-2.4-2.4-5.7-3.8-9.2-3.8H6.5c-5.8 0-8.7 7-4.6 11.1l62.7 62.7c2.4 2.4 5.7 3.8 9.2 3.8h317.4c5.8 0 8.7-7 4.6-11.1l-62.7-62.7z"
       style={{
-        fill: 'url(#c)',
+        fill: 'url(#solana-gradient-3)',
       }}
     />
   </svg>
