@@ -16,10 +16,15 @@ export interface CheckEntitlementsResult extends ValidateEntitlementsResponse {}
 // eslint-disable-next-line import/prefer-default-export
 export const CreateCheckEntitlements = (api: AxiosInstance, context: Context) => {
   const checkEntitlements = async (entitlementKeys: string[]) => {
-    const publicKey = context.getSolana('publicKey');
-    const wallet = context.getSolana('wallet');
+    const solanaPublicKey = context.getSolana('publicKey');
+    const solanaWallet = context.getSolana('wallet');
+    const ethereumAddress = context.getEthereum('address');
+    const ethereumWallet = context.getEthereum('wallet');
 
-    if (!publicKey || !wallet) {
+    const hasSolanaWallet = solanaPublicKey && solanaWallet;
+    const hasEthereumWallet = ethereumAddress && ethereumWallet;
+
+    if (!hasSolanaWallet && !hasEthereumWallet) {
       return getErrorState('Public key or wallet not found. Please ensure a wallet is connected.');
     }
 

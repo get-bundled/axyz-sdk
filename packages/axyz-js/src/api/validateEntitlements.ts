@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosRequestHeaders } from 'axios';
+import base58 from 'bs58';
 import checkWalletConnection from '../solana/checkWalletConnection';
 import Context from '../utils/context';
 import { createOrLoadNonceMessageSignature as getSolanaSignature } from '../solana/signMessage';
@@ -25,6 +26,8 @@ export const getErrorState = (error: string) => ({
   isEntitled: false,
 });
 
+const encoder = new TextEncoder();
+
 export const validateEntitlements = async (
   api: AxiosInstance,
   context: Context,
@@ -48,11 +51,11 @@ export const validateEntitlements = async (
   if (chains.includes('ETH') && context.getEthereum('isConnected')) {
     const wallet = context.getEthereum('wallet');
     const address = context.getEthereum('address');
-    const { signature, message, error } = await getEthereumSignature(context, wallet!);
+    const { signature, message, error } = await getEthereumSignature(context.ethereum, wallet!);
 
     if (!error && signature && message) {
       headers['x-eth-signature'] = signature;
-      headers['x-eth-message'] = message;
+      headers['x-eth-message'] = base58.encode(encoder.encode(message));
       headers['x-eth-address'] = address!;
     }
   }
