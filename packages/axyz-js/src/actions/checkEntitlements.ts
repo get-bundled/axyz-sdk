@@ -35,35 +35,27 @@ export const CreateCheckEntitlements = (api: AxiosInstance, context: Context) =>
         return getErrorState('No entitlement keys provided');
       }
 
-      try {
-        const entitlements = await getOrFetchEntitlementKeys(api, context);
+      const entitlements = await getOrFetchEntitlementKeys(api, context);
 
-        const chains = getRequiredChainsForEntitlements(entitlementKeys, entitlements!);
+      const chains = getRequiredChainsForEntitlements(entitlementKeys, entitlements!);
 
-        const hasConnectedWalletForRequiredChain = checkForConnectedWalletsOnChains(
-          chains,
-          context
+      const hasConnectedWalletForRequiredChain = checkForConnectedWalletsOnChains(chains, context);
+
+      if (!hasConnectedWalletForRequiredChain) {
+        return getErrorState(
+          'No connected wallet found for required chains. Please ensure a wallet is connected.'
         );
+      }
 
-        if (!hasConnectedWalletForRequiredChain) {
-          return getErrorState(
-            'No connected wallet found for required chains. Please ensure a wallet is connected.'
-          );
-        }
+      try {
+        const validation = await validateEntitlements(api, context, entitlementKeys, chains);
 
-        try {
-          const validation = await validateEntitlements(api, context, entitlementKeys, chains);
-
-          return validation;
-        } catch (error) {
-          return getErrorState('Could not validate entitlements');
-        }
-      } catch (e) {
-        return getErrorState((e as AxiosError).message);
+        return validation;
+      } catch (error) {
+        return getErrorState('Could not validate entitlements');
       }
     } catch (e) {
-      console.log(e);
-      throw e;
+      return getErrorState((e as AxiosError).message);
     }
   };
   return checkEntitlements;

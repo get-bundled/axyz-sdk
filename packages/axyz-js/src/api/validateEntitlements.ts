@@ -35,7 +35,6 @@ export const validateEntitlements = async (
   chains: SupportedChain[]
 ) => {
   const headers: AxiosRequestHeaders = {};
-  console.log('started validate entitlements?');
 
   if (chains.includes('SOL') && context.getSolana('isConnected')) {
     const wallet = checkWalletConnection(context.getSolana('wallet'));
