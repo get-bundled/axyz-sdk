@@ -1,4 +1,5 @@
 import { generateNonce, SiweMessage } from 'siwe';
+import { axyzMessage } from '../constants';
 
 import { Address, EthereumWallet } from '../types/ethereum';
 import canUseDOM from '../utils/canUseDOM';
@@ -7,15 +8,13 @@ import type AxyzEthereumContext from './context';
 
 export const ETH_SIGNATURE_STORAGE_KEY = 'axyz:eth:signature';
 
-export const axyzMessage = 'Sign this message to log in (getaxyz.com)';
-
 type StoredMessageAndSignature = {
   message?: string;
   signature?: string;
   signatureAddress?: string;
 };
 
-export const loadStoredEthereumSignatureAndMessage = (): StoredMessageAndSignature => {
+export const loadStoredSignatureAndMessage = (): StoredMessageAndSignature => {
   if (!canUseDOM) return {};
   try {
     const signatureAndMessage = sessionStorage.getItem(ETH_SIGNATURE_STORAGE_KEY);
@@ -32,11 +31,7 @@ export const loadStoredEthereumSignatureAndMessage = (): StoredMessageAndSignatu
   return {};
 };
 
-export const setStoredEthereumSignature = (
-  signature: string,
-  address: Address,
-  message: string
-) => {
+export const setStoredSignature = (signature: string, address: Address, message: string) => {
   if (!canUseDOM) return;
   try {
     sessionStorage.setItem(
@@ -48,13 +43,13 @@ export const setStoredEthereumSignature = (
   }
 };
 
-export const clearStoredEthereumSignature = (context: AxyzEthereumContext) => {
+export const clearStoredSignature = (context: AxyzEthereumContext) => {
   if (!canUseDOM) return;
   try {
     context.setMany({
       signature: '',
       signatureAddress: '',
-      nonceMessage: '',
+      signatureMessage: '',
     });
 
     sessionStorage.removeItem(ETH_SIGNATURE_STORAGE_KEY);
@@ -63,7 +58,7 @@ export const clearStoredEthereumSignature = (context: AxyzEthereumContext) => {
   }
 };
 
-export const createOrLoadEthereumNonceMessageSignature = async (
+export const createOrLoadMessageSignature = async (
   context: AxyzEthereumContext,
   wallet: EthereumWallet
 ) => {
@@ -73,14 +68,14 @@ export const createOrLoadEthereumNonceMessageSignature = async (
   const address = await wallet.getAccount();
   const savedSignature = context.get('signature');
   const savedAddress = context.get('signatureAddress');
-  const savedMessage = context.get('nonceMessage');
+  const savedMessage = context.get('signatureMessage');
 
   if (savedSignature && savedMessage && savedAddress === address) {
     return { signature: savedSignature, message: savedMessage };
   }
 
   if (savedSignature && savedMessage && savedAddress !== address) {
-    clearStoredEthereumSignature(context);
+    clearStoredSignature(context);
   }
 
   try {
@@ -100,7 +95,7 @@ export const createOrLoadEthereumNonceMessageSignature = async (
     const signature = await signer.signMessage(message);
 
     if (signature) {
-      setStoredEthereumSignature(signature, address, message);
+      setStoredSignature(signature, address, message);
       return { signature, message };
     }
 

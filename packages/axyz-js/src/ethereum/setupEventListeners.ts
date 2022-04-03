@@ -1,8 +1,5 @@
 import type AxyzEthereumContext from './context';
-import {
-  clearStoredEthereumSignature,
-  createOrLoadEthereumNonceMessageSignature,
-} from './signature';
+import { clearStoredSignature, createOrLoadMessageSignature } from './signature';
 
 const setupEventListeners = (context: AxyzEthereumContext) => {
   context.on(
@@ -14,10 +11,7 @@ const setupEventListeners = (context: AxyzEthereumContext) => {
         return;
       }
 
-      const { signature, message } = await createOrLoadEthereumNonceMessageSignature(
-        context,
-        wallet
-      );
+      const { signature, message } = await createOrLoadMessageSignature(context, wallet);
 
       context.setMany({
         isConnected: true,
@@ -25,7 +19,7 @@ const setupEventListeners = (context: AxyzEthereumContext) => {
         address: account,
         signatureAddress: account,
         signature,
-        nonceMessage: message,
+        signatureMessage: message,
       });
 
       await callback?.();
@@ -34,7 +28,7 @@ const setupEventListeners = (context: AxyzEthereumContext) => {
   );
 
   context.on('disconnect', async (callback) => {
-    clearStoredEthereumSignature(context);
+    clearStoredSignature(context);
 
     context.setMany({
       isConnected: false,

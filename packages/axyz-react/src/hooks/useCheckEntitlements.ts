@@ -42,7 +42,6 @@ const useCheckEntitlements = (entitlementsToCheck: string[], { skip }: Options =
 
       const { isEntitled, errors, isEntitledByNFT, isEntitledByMint, matchedNFTs, entitlements } =
         await axyz.checkEntitlements(entitlementsToCheck);
-
       complete.current = true;
       isComputing.current = false;
       setEntitlement({
@@ -56,6 +55,7 @@ const useCheckEntitlements = (entitlementsToCheck: string[], { skip }: Options =
       });
     };
 
+    console.log({ skip, complete, isComputing });
     if (!skip && !complete.current && !isComputing.current) {
       performCheck();
     }

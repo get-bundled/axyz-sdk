@@ -13,13 +13,15 @@ const useStatus = () => {
     disconnecting: solanaDisconnecting,
     connected: solanaConnected,
     wallet: solanaWallet,
+    loading: solanaLoading,
   } = useSolanaWallet();
 
   return {
+    loading: ethereumLoading || solanaLoading,
     ethereumConnected,
     solanaConnected,
     ethereumLoading,
-    solanaLoading: solanaConnecting || solanaDisconnecting,
+    solanaLoading: solanaConnecting || solanaDisconnecting || solanaLoading,
     ethereumWallet,
     solanaWallet,
     connected: ethereumConnected || solanaConnected,

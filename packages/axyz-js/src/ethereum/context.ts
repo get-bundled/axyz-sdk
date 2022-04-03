@@ -1,11 +1,11 @@
+import EthereumEvents from './events';
 import { getSupportedChain } from './chains';
 import getWallets from './getWallets';
 import setupWalletListeners from './setupWalletListeners';
 import setupEventListeners from './setupEventListeners';
-import EthereumEvents from './events';
+import { loadStoredSignatureAndMessage } from './signature';
 import type { Address, EthereumWallet, EthereumWallets, ChainName } from '../types/ethereum';
-import { ErrorCallback } from '../types';
-import { loadStoredEthereumSignatureAndMessage } from '.';
+import type { ErrorCallback } from '../types';
 
 interface AxyzEthereumContextArgs {
   chain: ChainName;
@@ -29,18 +29,18 @@ class AxyzEthereumContext extends EthereumEvents {
 
   signatureAddress?: Address;
 
-  nonceMessage?: string;
+  signatureMessage?: string;
 
   constructor({ chain, onError }: AxyzEthereumContextArgs) {
     super();
 
     this.wallets = getWallets(getSupportedChain(chain));
 
-    const { signature, signatureAddress, message } = loadStoredEthereumSignatureAndMessage();
+    const { signature, signatureAddress, message } = loadStoredSignatureAndMessage();
 
     this.signature = signature;
     this.signatureAddress = signatureAddress;
-    this.nonceMessage = message;
+    this.signatureMessage = message;
 
     // We use event listeners to sync the state of the wallet with the context so that external
     // consumers don't have to worry about calling the methods directly.

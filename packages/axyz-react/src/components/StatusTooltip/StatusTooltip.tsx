@@ -12,7 +12,7 @@ import * as styles from './styles';
 
 interface Props {
   ethereumWallet?: EthereumWallet | null;
-  solanaWallet?: SolanaWallet;
+  solanaWallet?: SolanaWallet | null;
   ethereumConnected: boolean;
   solanaConnected: boolean;
   ethereumLoading: boolean;

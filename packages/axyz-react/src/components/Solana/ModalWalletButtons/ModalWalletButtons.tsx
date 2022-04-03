@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Grid, Image } from '@nextui-org/react';
 
 import WalletConnectButton from '../../WalletConnectButton';
-import { useAxyz } from '../../../hooks';
+import { useAxyz, useSortedWallets } from '../../../hooks';
 import { useWallet } from '../../../hooks/solana/useWallet';
 
 interface Props {
@@ -10,7 +10,9 @@ interface Props {
 }
 
 const ModalWalletButtons: FC<Props> = ({ close }) => {
-  const { installedWallets, loadableWallets, undetectedWallets, connect } = useWallet();
+  const { installedWallets, loadableWallets, undetectedWallets } = useSortedWallets();
+  const { select } = useWallet();
+
   const axyz = useAxyz();
 
   return (
@@ -24,7 +26,9 @@ const ModalWalletButtons: FC<Props> = ({ close }) => {
               ) : undefined
             }
             onClick={async () => {
-              await connect(wallet);
+              select(wallet.name);
+
+              await wallet.connect();
             }}
             disabled={axyz.solana.isConnected}
             name={wallet.name}

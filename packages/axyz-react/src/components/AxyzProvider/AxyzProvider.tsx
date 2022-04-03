@@ -1,12 +1,15 @@
 import React, { useMemo } from 'react';
 import Axyz, { type AxyzSDKOptions } from '@axyzsdk/js';
 import { createTheme, NextUIProvider } from '@nextui-org/react';
-
 import { WagmiProvider } from 'wagmi';
-import SolanaConnectionProvider from '../Solana/ConnectionProvider';
-import SolanaWalletProvider from '../Solana/WalletProvider';
+import {
+  ConnectionProvider as SolanaConnectionProvider,
+  WalletProvider as SolanaProvider,
+} from '@solana/wallet-adapter-react';
+import { clusterApiUrl } from '@solana/web3.js';
 
 import EthereumWalletProvider from '../Ethereum/WalletProvider';
+import SolanaWalletProvider from '../Solana/WalletProvider';
 
 import ModalConnect from '../ModalConnect';
 
@@ -48,8 +51,6 @@ const AxyzProvider: React.FC<Props> = ({
     [apiKey, environment, solanaNetwork]
   );
 
-  const { solana } = axyz;
-
   return (
     <NextUIProvider theme={theme} disableBaseline>
       <ThemeController darkMode={darkMode} />
@@ -59,16 +60,23 @@ const AxyzProvider: React.FC<Props> = ({
           connectors={axyz.ethereum.wallets}
           connectorStorageKey="axyz.ethereum"
         >
-          <EthereumWalletProvider>
-            <SolanaConnectionProvider connection={solana.connection}>
-              <SolanaWalletProvider autoConnect={solanaAutoConnect} onError={onError}>
-                <ModalProvider>
-                  {connectModal && <ModalConnect onError={onError} />}
-                  {children}
-                </ModalProvider>
-              </SolanaWalletProvider>
-            </SolanaConnectionProvider>
-          </EthereumWalletProvider>
+          <SolanaConnectionProvider endpoint={clusterApiUrl(solanaNetwork)}>
+            <SolanaProvider
+              autoConnect={solanaAutoConnect}
+              onError={onError}
+              wallets={axyz.solana.wallets}
+              localStorageKey="axyz:solana:wallet"
+            >
+              <EthereumWalletProvider autoConnect={ethereumAutoConnect}>
+                <SolanaWalletProvider autoConnect={solanaAutoConnect}>
+                  <ModalProvider>
+                    {connectModal && <ModalConnect onError={onError} />}
+                    {children}
+                  </ModalProvider>
+                </SolanaWalletProvider>
+              </EthereumWalletProvider>
+            </SolanaProvider>
+          </SolanaConnectionProvider>
         </WagmiProvider>
       </AxyzContext.Provider>
     </NextUIProvider>

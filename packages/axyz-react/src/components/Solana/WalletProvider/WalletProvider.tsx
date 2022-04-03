@@ -1,153 +1,46 @@
-import { WalletError, WalletReadyState } from '@solana/wallet-adapter-base';
-import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { useWallet } from '@solana/wallet-adapter-react';
+import React, { FC, useMemo } from 'react';
 
-import { useAxyz, useUnloading } from '../../../hooks';
-import { useSortedWallets, useAutoConnect, WalletContext } from '../../../hooks/solana';
+import { useAxyz } from '../../../hooks';
 
-import useWalletEventListeners from './useWalletEventListeners';
-import handleUnavailableWallet from '../../../utils/solana/handleUnavailableWallet';
-
-import type { SolanaWallet } from '../../../types';
+import { WalletContext } from '../../../hooks/solana/useWallet';
+import useConnectionListeners from './useConnectionListeners';
+import useAxyzWalletState from './useAxyzWalletState';
+import useWaitForAutoConnect from '../../../hooks/useWaitForAutoConnect';
 
 export interface Props {
-  onError?: (error: WalletError) => void;
   autoConnect?: boolean;
 }
 
-const WalletProvider: FC<Props> = ({ children, onError, autoConnect }) => {
+const WalletProvider: FC<Props> = ({ children, autoConnect }) => {
   const axyz = useAxyz();
 
-  const { installedWallets, loadableWallets, undetectedWallets } = useSortedWallets();
+  const { connecting, disconnect, connect, select, disconnecting } = useWallet();
 
-  const [wallet, setWallet] = useState<SolanaWallet | undefined>(axyz.solana.wallet);
+  useConnectionListeners(axyz);
 
-  const [connected, setConnected] = useState(false);
-  const [connecting, setConnecting] = useState(false);
-  const [disconnecting, setDisconnecting] = useState(false);
+  const state = useAxyzWalletState(axyz);
 
-  const isDisconnecting = useRef(false);
-  const isConnecting = useRef(false);
+  const waitingForAutoConnect = useWaitForAutoConnect(state.connected, !!autoConnect);
 
-  const readyState = wallet?.readyState || WalletReadyState.Unsupported;
+  console.log({ waitingForAutoConnect, connecting, disconnecting });
 
-  const isReady = readyState === WalletReadyState.Installed;
-  const isLoadable = readyState === WalletReadyState.Loadable;
-  const isUnavailable = !isReady && !isLoadable;
-
-  const isUnloading = useUnloading();
-
-  const { handleError } = useWalletEventListeners({
-    axyz,
-    isUnloading,
-    onError,
-    setConnected,
-    wallet,
-    setWallet,
-  });
-
-  const selectWallet = useCallback(
-    (w: SolanaWallet) => {
-      axyz.solana.selectWallet(w);
-      setWallet(w);
-    },
-    [axyz]
-  );
-
-  // Connect the adapter to the wallet
-  const setWalletAndConnect = useCallback(
-    async (w: SolanaWallet) => {
-      if (connecting || disconnecting || wallet?.connected) {
-        return null;
-      }
-
-      const available = handleUnavailableWallet(w, handleError);
-
-      if (!available) return null;
-
-      isConnecting.current = true;
-      setConnecting(true);
-      try {
-        if (!wallet) {
-          selectWallet(w);
-        }
-        await axyz.solana.connectWallet();
-        setConnected(true);
-      } catch (error: any) {
-        axyz.solana.setStoredWalletName(null);
-        // Rethrow the error, and handleError will also be called
-        throw error;
-      } finally {
-        setConnecting(false);
-        isConnecting.current = false;
-      }
-      return null;
-    },
-    [axyz, selectWallet, wallet, connecting, handleError, disconnecting]
-  );
-
-  // Disconnect the adapter from the wallet
-  const disconnect = useCallback(async () => {
-    if (disconnecting) {
-      return;
-    }
-
-    if (!wallet) {
-      return;
-    }
-
-    setDisconnecting(true);
-    isDisconnecting.current = true;
-    try {
-      await wallet.disconnect();
-      axyz.solana.disconnectWallet();
-      setConnected(false);
-      setWallet(undefined);
-    } finally {
-      setDisconnecting(false);
-      isDisconnecting.current = false;
-    }
-  }, [disconnecting, wallet, axyz]);
-
-  useAutoConnect({
-    autoConnect,
-    wallet,
-    isConnecting,
-    isDisconnecting,
-    setConnecting,
-    setConnected,
-    connected,
-    connecting,
-    isUnavailable,
-  });
-
-  const context = useMemo(
+  const contextValue = useMemo(
     () => ({
-      wallet,
-      installedWallets,
-      loadableWallets,
-      undetectedWallets,
+      wallet: state.wallet,
+      connected: state.connected,
       connecting,
       disconnecting,
-      select: selectWallet,
-      connect: setWalletAndConnect,
       disconnect,
-      connected,
+      connect,
+      select,
+      // On the first render we want it to be loading, this will give auto connect a chance to work
+      loading: connecting || disconnecting || waitingForAutoConnect,
     }),
-    [
-      wallet,
-      installedWallets,
-      loadableWallets,
-      undetectedWallets,
-      connecting,
-      disconnecting,
-      selectWallet,
-      setWalletAndConnect,
-      disconnect,
-      connected,
-    ]
+    [state, connecting, disconnecting, disconnect, connect, select, waitingForAutoConnect]
   );
 
-  return <WalletContext.Provider value={context}>{children}</WalletContext.Provider>;
+  return <WalletContext.Provider value={contextValue}>{children}</WalletContext.Provider>;
 };
 
 export default WalletProvider;

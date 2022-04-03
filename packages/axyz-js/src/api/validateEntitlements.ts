@@ -2,8 +2,8 @@ import { AxiosInstance, AxiosRequestHeaders } from 'axios';
 import base58 from 'bs58';
 import checkWalletConnection from '../solana/checkWalletConnection';
 import Context from '../utils/context';
-import { createOrLoadNonceMessageSignature as getSolanaSignature } from '../solana/signMessage';
-import { createOrLoadEthereumNonceMessageSignature as getEthereumSignature } from '../ethereum/signature';
+import { createOrLoadMessageSignature as getSolanaSignature } from '../solana/signature';
+import { createOrLoadMessageSignature as getEthereumSignature } from '../ethereum/signature';
 
 import type { MetaplexNFTWithMetadata } from '../types/solana/nft';
 import type { SupportedChain } from '../types';
@@ -35,11 +35,12 @@ export const validateEntitlements = async (
   chains: SupportedChain[]
 ) => {
   const headers: AxiosRequestHeaders = {};
+  console.log('started validate entitlements?');
 
   if (chains.includes('SOL') && context.getSolana('isConnected')) {
     const wallet = checkWalletConnection(context.getSolana('wallet'));
     const publicKey = context.getSolana('publicKey')!;
-    const { signature, message, error } = await getSolanaSignature(context, wallet);
+    const { signature, message, error } = await getSolanaSignature(context.solana, wallet);
 
     if (!error && signature && message) {
       headers['x-sol-signature'] = signature;

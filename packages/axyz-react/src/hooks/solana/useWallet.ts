@@ -1,18 +1,16 @@
-import { Adapter } from '@solana/wallet-adapter-base';
+import { SolanaWallet } from '@axyzsdk/js';
+import type { WalletContextState as SolanaWalletContextState } from '@solana/wallet-adapter-react';
 import { createContext, useContext } from 'react';
-import { SolanaWallet } from '../../types';
 
 export interface WalletContextState {
-  wallet?: SolanaWallet;
-  installedWallets: SolanaWallet[];
-  loadableWallets: SolanaWallet[];
-  undetectedWallets: SolanaWallet[];
-  connecting: boolean;
-  disconnecting: boolean;
-  select: (wallet: SolanaWallet) => void;
-  connect(wallet: Adapter): Promise<void | null>;
-  disconnect(): Promise<void>;
+  wallet?: SolanaWallet | null;
   connected: boolean;
+  connecting: SolanaWalletContextState['connecting'];
+  loading: boolean;
+  disconnecting: SolanaWalletContextState['disconnecting'];
+  connect: SolanaWalletContextState['connect'];
+  disconnect: SolanaWalletContextState['disconnect'];
+  select: SolanaWalletContextState['select'];
 }
 
 export const WalletContext = createContext<WalletContextState>({} as WalletContextState);

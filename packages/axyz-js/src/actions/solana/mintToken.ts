@@ -1,16 +1,16 @@
 import axios, { type AxiosInstance } from 'axios';
 
 import doMintToken, { MintTokenResponse } from '../../api/mintToken';
-import type Context from '../../utils/context';
+import type AxyzSolanaContext from '../../solana/context';
 
 export interface MintTokenResult extends Partial<MintTokenResponse> {
   error?: string;
 }
 
-export const CreateMintToken = (api: AxiosInstance, context: Context) => {
+export const CreateMintToken = (api: AxiosInstance, context: AxyzSolanaContext) => {
   const mintToken = async (mintId: string): Promise<MintTokenResult> => {
     try {
-      const publicKey = context.getSolana('publicKey');
+      const publicKey = context.get('publicKey');
 
       if (!publicKey) {
         return {

@@ -1,6 +1,6 @@
 import { EthereumWallet, ErrorCallback } from '../types';
 import type AxyzEthereumContext from './context';
-import { createOrLoadEthereumNonceMessageSignature } from './signature';
+import { createOrLoadMessageSignature } from './signature';
 
 const setupWalletListeners = (
   wallet: EthereumWallet,
@@ -20,12 +20,12 @@ const setupWalletListeners = (
       return;
     }
 
-    const { signature, message } = await createOrLoadEthereumNonceMessageSignature(context, wallet);
+    const { signature, message } = await createOrLoadMessageSignature(context, wallet);
 
     context.setMany({
       address: account,
       signature,
-      nonceMessage: message,
+      signatureMessage: message,
     });
   });
 
