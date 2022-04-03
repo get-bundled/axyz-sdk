@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/js@0.4.0...@axyzsdk/js@0.5.0) (2022-04-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* significant API changes here. See types
+
+### Features
+
+* improve solana logic and context, add autoconnect wait ([e234b0c](https://github.com/get-bundled/axyz-sdk/commit/e234b0cbe319d7b4ba5bd29c5361dc1d6622d326))
+
+
+
 ## [0.4.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/js@0.3.0...@axyzsdk/js@0.4.0) (2022-04-01)
 
 
