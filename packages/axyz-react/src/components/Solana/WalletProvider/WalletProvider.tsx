@@ -23,8 +23,6 @@ const WalletProvider: FC<Props> = ({ children, autoConnect }) => {
 
   const waitingForAutoConnect = useWaitForAutoConnect(state.connected, !!autoConnect);
 
-  console.log({ waitingForAutoConnect, connecting, disconnecting });
-
   const contextValue = useMemo(
     () => ({
       wallet: state.wallet,

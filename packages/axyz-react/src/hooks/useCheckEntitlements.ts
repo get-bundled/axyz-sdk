@@ -55,7 +55,6 @@ const useCheckEntitlements = (entitlementsToCheck: string[], { skip }: Options =
       });
     };
 
-    console.log({ skip, complete, isComputing });
     if (!skip && !complete.current && !isComputing.current) {
       performCheck();
     }
