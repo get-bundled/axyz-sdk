@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.5.1](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/js@0.5.0...@axyzsdk/js@0.5.1) (2022-04-11)
+
+
+### Bug Fixes
+
+* getbundled to getaxyz ([151a0d3](https://github.com/get-bundled/axyz-sdk/commit/151a0d393651bfe5afdfa72ba6d10a9e4e1379f2))
+
+
+
 ## [0.5.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/js@0.4.0...@axyzsdk/js@0.5.0) (2022-04-03)
 
 
