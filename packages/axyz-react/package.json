@@ -32,16 +32,16 @@
     "axyz wallet",
     "web3"
   ],
-  "author": "getbundled.co",
+  "author": "getaxyz.com",
   "contributors": [
     {
       "name": "Jeremy Monson",
-      "email": "jeremy@getbundled.co",
+      "email": "jeremy@getaxyz.com",
       "url": "https://github.com/monsonjeremy"
     },
     {
       "name": "Michael Malchak",
-      "email": "michael@getbundled.co",
+      "email": "michael@getaxyz.com",
       "url": "https://github.com/malchak"
     }
   ],
