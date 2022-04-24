@@ -35,7 +35,6 @@ const ConnectButton: React.FC<Props> = ({ onClick, hideAfterConnect, css }) => {
     <Button
       css={css}
       onClick={handleClick}
-      disabled={!connected}
       shadow
       ghost
       color={connected ? 'success' : 'gradient'}
