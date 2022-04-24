@@ -39,7 +39,6 @@ const WalletConnectButton = ({ onClick, disabled, Icon, connected, name, close }
       disabled={disabled || loading || connected}
       ghost={!error}
       color={success || connected ? 'success' : error ? 'error' : 'gradient'}
-      clickable={!loading && !error}
       onClick={click}
     >
       {loading ? (
