@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.5.1...@axyzsdk/react@0.6.0) (2022-04-24)
+
+
+### Features
+
+* allow overriding modal css ([020a9e6](https://github.com/get-bundled/axyz-sdk/commit/020a9e61592f3ef6f5ace2bab75ef1aae226fc29))
+
+
+### Bug Fixes
+
+* breaking nextui changes ([eea92ac](https://github.com/get-bundled/axyz-sdk/commit/eea92ac817bf8b59f3c90aec56e5002ff09f0279))
+* connect button always disabled ([0df21f2](https://github.com/get-bundled/axyz-sdk/commit/0df21f23b6b36386a6f472a86ba1a547ecc02b82))
+
+
+
 ### [0.5.1](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.5.0...@axyzsdk/react@0.5.1) (2022-04-11)
 
 

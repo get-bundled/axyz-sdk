@@ -1,6 +1,6 @@
 {
   "name": "@axyzsdk/react",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "The React SDK for the Axyz Wallet",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -55,7 +55,7 @@
     "url": "https://github.com/get-bundled/axyz-sdk/issues"
   },
   "dependencies": {
-    "@axyzsdk/js": "^0.5.1",
+    "@axyzsdk/js": "^0.5.2",
     "@nextui-org/react": "^1.0.0-beta.6",
     "@solana/wallet-adapter-base": "^0.9.5",
     "@solana/wallet-adapter-react": "^0.15.4",
