@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Button, Modal, styled, Text, Grid } from '@nextui-org/react';
+import { Button, Modal, styled, Text, Grid, CSS } from '@nextui-org/react';
 
 import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
 import useModal from '../../hooks/useModal';
@@ -10,6 +10,7 @@ import { useWallet as useEthereumWallet } from '../../hooks/ethereum/useWallet';
 interface Props {
   width?: string;
   onError?: (error: Error) => void;
+  css?: CSS;
 }
 
 const Stack = styled('div', {
@@ -20,7 +21,7 @@ const Stack = styled('div', {
   my: '$4',
 });
 
-const ModalConnect: FC<Props> = ({ width = '500px', onError }) => {
+const ModalConnect: FC<Props> = ({ width = '500px', onError, css }) => {
   const { bindings, setVisible, visible } = useModal();
 
   const { connected: solanaConnected } = useSolanaWallet();
@@ -50,6 +51,7 @@ const ModalConnect: FC<Props> = ({ width = '500px', onError }) => {
         open={bindings.open}
         onClose={bindings.onClose}
         width={width}
+        css={css}
       >
         <Modal.Header css={{ flexDirection: 'column' }}>
           <Text

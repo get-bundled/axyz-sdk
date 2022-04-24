@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import Axyz, { type AxyzSDKOptions } from '@axyzsdk/js';
-import { createTheme, NextUIProvider } from '@nextui-org/react';
+import { createTheme, CSS, NextUIProvider } from '@nextui-org/react';
 import { WagmiProvider } from 'wagmi';
 import {
   ConnectionProvider as SolanaConnectionProvider,
@@ -21,6 +21,7 @@ interface Props extends AxyzSDKOptions {
   apiKey: string;
   darkMode?: boolean;
   connectModal?: boolean;
+  modalCss?: CSS;
 }
 
 const AxyzProvider: React.FC<Props> = ({
@@ -30,6 +31,7 @@ const AxyzProvider: React.FC<Props> = ({
   ethereumChain,
   apiKey,
   onError,
+  modalCss,
   connectModal = true,
   ethereumAutoConnect = true,
   solanaAutoConnect = true,
@@ -70,7 +72,7 @@ const AxyzProvider: React.FC<Props> = ({
               <EthereumWalletProvider autoConnect={ethereumAutoConnect}>
                 <SolanaWalletProvider autoConnect={solanaAutoConnect}>
                   <ModalProvider>
-                    {connectModal && <ModalConnect onError={onError} />}
+                    {connectModal && <ModalConnect css={modalCss} onError={onError} />}
                     {children}
                   </ModalProvider>
                 </SolanaWalletProvider>

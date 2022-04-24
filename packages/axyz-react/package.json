@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@axyzsdk/js": "^0.5.1",
-    "@nextui-org/react": "^1.0.4-beta.5",
+    "@nextui-org/react": "^1.0.0-beta.6",
     "@solana/wallet-adapter-base": "^0.9.5",
     "@solana/wallet-adapter-react": "^0.15.4",
     "@solana/wallet-adapter-wallets": "^0.15.5",
