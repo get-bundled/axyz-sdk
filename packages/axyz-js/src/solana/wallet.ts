@@ -1,5 +1,21 @@
-import { BaseMessageSignerWalletAdapter, WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { getWalletAdapters } from '@solana/wallet-adapter-wallets';
+import {
+  Adapter,
+  BaseMessageSignerWalletAdapter,
+  WalletAdapterNetwork,
+} from '@solana/wallet-adapter-base';
+import {
+  BitKeepWalletAdapter,
+  BloctoWalletAdapter,
+  CloverWalletAdapter,
+  GlowWalletAdapter,
+  LedgerWalletAdapter,
+  PhantomWalletAdapter,
+  SlopeWalletAdapter,
+  SolflareWalletAdapter,
+  SolletExtensionWalletAdapter,
+  SolletWalletAdapter,
+  TorusWalletAdapter,
+} from '@solana/wallet-adapter-wallets';
 import type { Cluster } from '@solana/web3.js';
 
 import type { SolanaWallet } from '../types';
@@ -18,6 +34,22 @@ export const findWallet = (wallets: SolanaWallet[], name: string) => {
 
   return foundWallet;
 };
+
+export const getWalletAdapters = ({
+  network,
+}: { network?: WalletAdapterNetwork } = {}): Adapter[] => [
+  new PhantomWalletAdapter(),
+  new GlowWalletAdapter(),
+  new SlopeWalletAdapter(),
+  new SolflareWalletAdapter({ network }),
+  new SolletExtensionWalletAdapter({ network }),
+  new BitKeepWalletAdapter(),
+  new CloverWalletAdapter(),
+  new TorusWalletAdapter(),
+  new LedgerWalletAdapter(),
+  new SolletWalletAdapter({ network }),
+  new BloctoWalletAdapter({ network }),
+];
 
 export const getWallets = (solanaNetwork: Cluster) => {
   const solanaWallets = getWalletAdapters({
