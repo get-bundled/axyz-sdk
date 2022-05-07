@@ -17,7 +17,7 @@ const WalletProvider: React.FC<Props> = ({ children, autoConnect }) => {
   useConnectionListeners(axyz);
   const state = useAxyzWalletState(axyz);
 
-  const [{ loading, error, data: accountData }, disconnect] = useAccount();
+  const [{ loading, error, data: accountData }, disconnect] = useAccount({ fetchEns: true });
 
   const waitingForAutoConnect = useWaitForAutoConnect(state.connected, !!autoConnect);
 

@@ -1,4 +1,4 @@
-import { Button, CSS, NormalColors, styled, Tooltip } from '@nextui-org/react';
+import { Button, CSS, NormalColors, styled, Tooltip, Image } from '@nextui-org/react';
 import React from 'react';
 import { IoWalletOutline } from 'react-icons/io5';
 
@@ -29,6 +29,8 @@ const WalletStatus: React.FC<Props> = ({ css }) => {
     error: ethereumError,
     loading: ethereumLoading,
     disconnect: ethereumDisconnect,
+    address: ethereumAddress,
+    ens: ethereumEns,
   } = useEthereumWallet();
 
   let color: NormalColors = 'success';
@@ -49,6 +51,9 @@ const WalletStatus: React.FC<Props> = ({ css }) => {
         keepMounted
         content={
           <StatusTooltip
+            ethereumAddress={ethereumAddress}
+            ethereumName={ethereumEns?.name}
+            ethereumAvatar={ethereumEns?.avatar}
             ethereumWallet={ethereumWallet}
             solanaWallet={solanaWallet}
             ethereumLoading={ethereumLoading}
@@ -60,17 +65,28 @@ const WalletStatus: React.FC<Props> = ({ css }) => {
             solanaDisconnect={solanaDisconnect}
           />
         }
-        css={{ backgroundColor: '$accents3' }}
+        css={{ padding: 0, backgroundColor: '$background', width: 323, height: 238 }}
         rounded
         placement="bottomEnd"
       >
         <Button
           auto
-          css={{ px: '$10' }}
+          css={{ px: 0, width: 48, height: 48, borderRadius: '100%' }}
           color={color}
           ghost
-          icon={<WalletIcon fill="currentColor" />}
-        />
+          icon={!ethereumEns?.avatar && <WalletIcon fill="currentColor" />}
+        >
+          {ethereumEns?.avatar && (
+            <Image
+              showSkeleton
+              src={ethereumEns.avatar}
+              alt={ethereumEns.name}
+              objectFit="contain"
+              width="100%"
+              height="100%"
+            />
+          )}
+        </Button>
       </Tooltip>
     </Box>
   );
