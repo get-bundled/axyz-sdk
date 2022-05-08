@@ -1,10 +1,10 @@
 import React, { FC, useCallback, useEffect } from 'react';
 import { Button, Modal, styled, Text, Grid, CSS } from '@nextui-org/react';
+import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
 
 import useModal from '../../hooks/useModal';
 import SolanaModalWalletButtons from '../Solana/ModalWalletButtons';
 import EthereumModalWalletButtons from '../Ethereum/ModalWalletButtons';
-import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
 import { useWallet as useEthereumWallet } from '../../hooks/ethereum/useWallet';
 
 interface Props {
