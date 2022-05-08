@@ -1,10 +1,10 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { Button, Modal, styled, Text, Grid, CSS } from '@nextui-org/react';
 
-import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
 import useModal from '../../hooks/useModal';
 import SolanaModalWalletButtons from '../Solana/ModalWalletButtons';
 import EthereumModalWalletButtons from '../Ethereum/ModalWalletButtons';
+import { useWallet as useSolanaWallet } from '@solana/wallet-adapter-react';
 import { useWallet as useEthereumWallet } from '../../hooks/ethereum/useWallet';
 
 interface Props {
@@ -22,13 +22,18 @@ const Stack = styled('div', {
 });
 
 const ModalConnect: FC<Props> = ({ width = '500px', onError, css }) => {
-  const { bindings, setVisible, visible } = useModal();
+  const {
+    bindings,
+    setVisible,
+    visible,
+    setShowETHWallets,
+    setShowSOLWallets,
+    showETHWallets,
+    showSOLWallets,
+  } = useModal();
 
   const { connected: solanaConnected } = useSolanaWallet();
   const { connected: ethereumConnected } = useEthereumWallet();
-
-  const [showETHWallets, setShowETHWallets] = useState(!ethereumConnected);
-  const [showSOLWallets, setShowSOLWallets] = useState(!solanaConnected);
 
   useEffect(() => {
     if (solanaConnected && !visible) {
@@ -39,7 +44,7 @@ const ModalConnect: FC<Props> = ({ width = '500px', onError, css }) => {
       setShowETHWallets(false);
       setShowSOLWallets(true);
     }
-  }, [solanaConnected, ethereumConnected, visible]);
+  }, [solanaConnected, ethereumConnected, visible, setShowSOLWallets, setShowETHWallets]);
 
   const close = useCallback(() => setVisible(false), [setVisible]);
 

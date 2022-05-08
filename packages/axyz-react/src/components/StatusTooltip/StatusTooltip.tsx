@@ -2,16 +2,17 @@ import type { EthereumWallet, SolanaWallet } from '@axyzsdk/js';
 import { styled } from '@nextui-org/react';
 import React from 'react';
 
-import WalletPill from '../WalletPill';
+import WalletStatusControl from '../WalletStatusControl';
 
 import getWalletIcon from '../../utils/ethereum/getWalletIcon';
-import Ethereum from '../../logos/Ethereum';
-import Solana from '../../logos/Solana';
 
 import * as styles from './styles';
 
 interface Props {
   ethereumWallet?: EthereumWallet | null;
+  ethereumAddress?: string | null;
+  ethereumName?: string | null;
+  ethereumAvatar?: string | null;
   solanaWallet?: SolanaWallet | null;
   ethereumConnected: boolean;
   solanaConnected: boolean;
@@ -24,11 +25,12 @@ interface Props {
 
 const FlexColumn = styled('div', styles.FlexColumn);
 const SolanaWalletIcon = styled('img', {});
-const EthereumLogo = styled(Ethereum, styles.EthereumLogo);
-const SolanaLogo = styled(Solana, styles.SolanaLogo);
 
 const StatusTooltip: React.FC<Props> = ({
   ethereumWallet,
+  ethereumAddress,
+  ethereumName,
+  ethereumAvatar,
   solanaWallet,
   ethereumConnected,
   solanaConnected,
@@ -38,31 +40,40 @@ const StatusTooltip: React.FC<Props> = ({
   ethereumDisconnect,
   solanaDisconnect,
 }) => {
-  const iconSize = 30;
-  const ETHWalletIcon = getWalletIcon(ethereumWallet, iconSize);
+  const iconSize = 40;
+  const ETHWalletIcon = getWalletIcon(ethereumWallet, ethereumName, ethereumAvatar, iconSize);
 
   return (
-    <FlexColumn>
-      <WalletPill
-        icon={ETHWalletIcon || <EthereumLogo width={iconSize} height={iconSize} />}
-        name={ethereumWallet?.name || 'Ethereum'}
+    <FlexColumn
+      css={{
+        width: 323,
+        height: 238,
+        position: 'relative',
+      }}
+    >
+      <WalletStatusControl
+        chain="ETH"
+        address={ethereumAddress || undefined}
+        walletIcon={ETHWalletIcon}
+        name={ethereumName || ethereumWallet?.name || 'Ethereum'}
         connected={ethereumConnected}
         loading={ethereumLoading}
         error={!!ethereumError}
         disconnect={ethereumDisconnect}
+        border
       />
-      <WalletPill
-        icon={
+      <WalletStatusControl
+        chain="SOL"
+        walletIcon={
           solanaWallet ? (
             <SolanaWalletIcon
               css={{ width: `${iconSize}px`, height: `${iconSize}px` }}
               alt={solanaWallet?.name}
               src={solanaWallet?.icon}
             />
-          ) : (
-            <SolanaLogo width={iconSize} height={iconSize} />
-          )
+          ) : undefined
         }
+        address={solanaWallet?.publicKey?.toString()}
         name={solanaWallet?.name || 'Solana'}
         connected={solanaConnected}
         loading={solanaLoading}
