@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.7.1](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.7.0...@axyzsdk/react@0.7.1) (2022-05-10)
+
+
+### Bug Fixes
+
+* add eth address to useStatus ([91cf04a](https://github.com/get-bundled/axyz-sdk/commit/91cf04a05eed912dd8a94e90cf2ed5c268382d5a))
+
+
+
 ## [0.7.0](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.6.1...@axyzsdk/react@0.7.0) (2022-05-08)
 
 
