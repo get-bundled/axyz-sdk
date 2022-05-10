@@ -6,6 +6,7 @@ const useStatus = () => {
     connected: ethereumConnected,
     loading: ethereumLoading,
     wallet: ethereumWallet,
+    address: ethereumAddress,
   } = useEthereumWallet();
 
   const {
@@ -21,6 +22,7 @@ const useStatus = () => {
     ethereumConnected,
     solanaConnected,
     ethereumLoading,
+    ethereumAddress,
     solanaLoading: solanaConnecting || solanaDisconnecting || solanaLoading,
     ethereumWallet,
     solanaWallet,
