@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.7.2](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.7.1...@axyzsdk/react@0.7.2) (2022-05-11)
+
+
+### Bug Fixes
+
+* revert change to nextui version ([2b10ac6](https://github.com/get-bundled/axyz-sdk/commit/2b10ac65c69a2c8611cf9ec7dc542c843286beb4))
+
+
+
 ### [0.7.1](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.7.0...@axyzsdk/react@0.7.1) (2022-05-10)
 
 
