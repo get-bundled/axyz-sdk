@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.7.3](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.7.2...@axyzsdk/react@0.7.3) (2022-05-11)
+
+
+### Bug Fixes
+
+* update colors and styles based on mocks ([13e011d](https://github.com/get-bundled/axyz-sdk/commit/13e011d89b4fea0756c5f03efff5268371b46963))
+
+
+
 ### [0.7.2](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.7.1...@axyzsdk/react@0.7.2) (2022-05-11)
 
 
