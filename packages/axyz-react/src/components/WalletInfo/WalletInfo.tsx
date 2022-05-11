@@ -34,7 +34,7 @@ const WalletInfo: React.FC<Props> = ({ address, name, Icon, setDisconnect }) => 
       <FlexColumn>
         <Text
           css={{
-            color: '#4364AF',
+            color: '#0A0B0D',
             fontWeight: 700,
             fontSize: 16,
             lineHeight: '16px',
@@ -45,7 +45,7 @@ const WalletInfo: React.FC<Props> = ({ address, name, Icon, setDisconnect }) => 
         </Text>
         <Text
           css={{
-            color: '#CDD7EE',
+            color: '#5C616D',
             fontWeight: 700,
             fontSize: 12,
             lineHeight: '12px',
@@ -65,7 +65,7 @@ const WalletInfo: React.FC<Props> = ({ address, name, Icon, setDisconnect }) => 
         fontSize: 12,
         fontWeight: 700,
         lineHeight: '12px',
-        color: '#4364af',
+        color: '#8D8CFB',
       }}
       onClick={setDisconnect}
     >

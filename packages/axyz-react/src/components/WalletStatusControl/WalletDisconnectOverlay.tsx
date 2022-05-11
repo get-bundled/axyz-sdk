@@ -10,6 +10,7 @@ interface Props {
 const WalletDisconnectOverlay: React.FC<Props> = ({ cancel, disconnect }) => (
   <Box
     css={{
+      borderRadius: '$lg',
       background: '$background',
       position: 'absolute',
       top: '0px',
@@ -29,7 +30,7 @@ const WalletDisconnectOverlay: React.FC<Props> = ({ cancel, disconnect }) => (
         fontSize: 16,
         lineHeight: '16px',
         textAlign: 'center',
-        color: '#4364AF',
+        color: '#0A0B0D',
         marginBottom: '30px',
         width: 199,
         height: 35,
@@ -57,7 +58,7 @@ const WalletDisconnectOverlay: React.FC<Props> = ({ cancel, disconnect }) => (
           border: '1px solid #ECF0F8',
           background: 'transparent',
           marginRight: '10px',
-          color: '#4364AF',
+          color: '#5C616D',
         }}
       >
         cancel
@@ -72,7 +73,7 @@ const WalletDisconnectOverlay: React.FC<Props> = ({ cancel, disconnect }) => (
           lineHeight: '12px',
           border: '1px solid #ECF0F8',
           background: 'transparent',
-          color: '#4364AF',
+          color: '#8D8CFB',
         }}
         bordered
         rounded

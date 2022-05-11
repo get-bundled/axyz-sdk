@@ -52,7 +52,7 @@ const StatusCircle = styled('div', {
       },
       disconnected: {
         backgroundColor: 'transparent',
-        border: '1px solid #9FB2DE',
+        border: '1px solid #C0C4CE',
       },
       loading: {
         backgroundColor: '$warning',
@@ -110,7 +110,7 @@ const WalletStatusControl: React.FC<Props> = ({
       <FlexRow css={{ width: '100%' }}>
         <Box css={{ display: 'flex' }}>
           <Icon styles={{ marginRight: '4px' }} />
-          <Text h1 css={{ fontSize: 12, lineHeight: '16px', fontWeight: 600, color: '#9FB2DE' }}>
+          <Text h1 css={{ fontSize: 12, lineHeight: '16px', fontWeight: 600, color: '#5C616D' }}>
             {chain}
           </Text>
         </Box>
@@ -132,11 +132,11 @@ const WalletStatusControl: React.FC<Props> = ({
               height: 28,
               background: 'transparent',
               marginTop: '24px',
-              color: '#4364AF',
+              color: '#8D8CFB',
               fontSize: '12px',
               fontWeight: 700,
               lineHeight: '12px',
-              border: '1px solid #ECF0F8',
+              border: '1px solid #EEF0F3',
             }}
             onClick={() => openModal(chain)}
           >
