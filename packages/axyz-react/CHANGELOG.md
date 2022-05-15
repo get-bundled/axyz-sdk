@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.7.5](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.7.4...@axyzsdk/react@0.7.5) (2022-05-15)
+
+
+### Bug Fixes
+
+* update metamask fox to correct viewbox sizing ([3963466](https://github.com/get-bundled/axyz-sdk/commit/3963466c8e27940ebed6a2a0ac7ec253472e924b))
+
+
+
 ### [0.7.4](https://github.com/get-bundled/axyz-sdk/compare/@axyzsdk/react@0.7.3...@axyzsdk/react@0.7.4) (2022-05-12)
 
 
